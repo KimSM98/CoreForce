@@ -1,0 +1,60 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class swipe : MonoBehaviour
+{
+    private int directionNum = 0;
+    private Vector2 mousePosition;
+    public Camera cam;
+    float mPosX;
+
+    void OnMouseDrag()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {//오브젝트의 transform좌표를 Screen point좌표로 바꾼다.
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+
+            mousePosition = cam.ScreenToWorldPoint(mousePosition);
+
+            mPosX = mousePosition.x;
+
+            if (mPosX > this.transform.position.x)
+            {
+                directionNum = 1;
+            }
+            if (mPosX < this.transform.position.x) ////클릭한 위치가 오브젝트의 왼쪽일때
+            {
+                directionNum = -1;
+            }
+
+        }
+        if (Input.GetMouseButtonUp(0)) //마우스 왼쪽 버튼에서 손을 떼면 이동 멈춤
+            directionNum = 0;
+            
+
+        gameObject.transform.Translate(new Vector2(directionNum / 10f, 0));
+
+        //카메라 안에서만 이동
+        Vector3 cameraView = Camera.main.WorldToViewportPoint(transform.position);
+        if (cameraView.x < 0.1f || cameraView.x > 0.9f) //범위
+        {
+            directionNum = 0;
+        };
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        mPosX = 0f;
+        if (cam == null)
+            cam = Camera.main;
+
+    }
+
+    // Update is called once per frame
+    void Update() //구현하고 싶은것 드래그한 거리만큼 오브젝트 이동
+    {
+        OnMouseDrag();
+    }
+}
+
