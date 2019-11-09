@@ -5,14 +5,15 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public float BulletSpeed = 1f;
+    public bool isMove = false;
 
     float Xpos;
     float Ypos;
 
-    public bool isMove = false;
-    
+    Vector3 cameraView;
+
     void Start()
-    {
+    {        
         //처음 위치
         Xpos = this.transform.position.x;
         Ypos = this.transform.position.y;
@@ -29,7 +30,7 @@ public class BulletScript : MonoBehaviour
             }
         }
 
-        Vector3 cameraView = Camera.main.WorldToViewportPoint(transform.position);
+        cameraView = Camera.main.WorldToViewportPoint(transform.position);
         
         if(this.gameObject.tag == "EnemyBullet")//Enemy불렛일때
         {
@@ -40,7 +41,7 @@ public class BulletScript : MonoBehaviour
             }
             if (isMove == true)
             {
-                this.transform.Translate(new Vector2(0, BulletSpeed * - 0.1f));//아래로 이동
+                this.transform.Translate(new Vector2(0, -BulletSpeed * 0.1f));//아래로 이동
             }
         }
         else//Player불렛일때

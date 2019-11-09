@@ -9,6 +9,7 @@ public class GamePlay_UIScript : MonoBehaviour
     public GameObject gameOverUI;
     public Text playerScoreText;
     public Button restartButton;
+    public GameObject AttackButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class GamePlay_UIScript : MonoBehaviour
         {
             gameOverUI.SetActive(true);
             restartButton.gameObject.SetActive(true);
+            AttackButtons.SetActive(false);
         }
         playerScoreText.text = "Score: " + GameManager.instance.playerScore;
     }

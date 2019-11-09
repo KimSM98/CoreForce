@@ -62,36 +62,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\BulletScript.cs" />
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\EnemyShootBullet.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\BGObjectMove.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Bullet\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyShootBullet.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\Move.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GamePlay_UIScript.cs" />
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Move.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Item\ItemScript.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\ObjectTypeScript.cs" />
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\PlayerShootBullet.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Player\PlayerShootBullet.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Player\swipe.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\ShootBullet.cs" />
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\swipe.cs" />
     <Compile Include="Assets\Scripts\MainMenuScripts\MainUIScript.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonSprite.cs" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -277,13 +281,13 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.2f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/Ksm/Desktop/KSM/아주대/3학년1학기/GameEngineProgramming/GameProject/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/Ksm/Desktop/CoreForce/CoreForceGit/RPS_AirForce/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.2f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

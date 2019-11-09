@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class ObjectTypeScript : MonoBehaviour
 {
-    public int Type = 0; //1:Fire 2:Grass 3:Water
-
-    void Start()
+    public int Type = 0; //1:Fire 2:Grass 3:Water//
+    public Sprite[] Sprites;
+    
+    public void ChangeSprite()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.GetComponent<SpriteRenderer>().sprite = Sprites[Type];
     }
 }

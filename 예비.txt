@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyManager : MonoBehaviour
+{
+    public GameObject[] Enemys;
+    public float moveSpeed = 1;
+    public bool isEnemyDead = false;
+
+    float[] xPos = { -2, 1, -1, 2, 0, 1 };
+    float[] originXPos;
+    float[] YPos = {6.5f, 8f };
+    float[] originYPos;
+    float speedTemp;
+
+    int iX = 0;
+    int iY = 0;
+
+    Vector3 cameraView;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        speedTemp = moveSpeed;
+        cameraView = Camera.main.WorldToViewportPoint(transform.position);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GameManager.instance.isMoveOn == false)//움직이는 상황이 아닐경우 움직이지 않게 speed를 0으로 바꿈
+        {
+            moveSpeed = 0;
+        }
+        else
+            moveSpeed = speedTemp;
+
+        if (GameManager.instance.isPlayerDead == true)//Gameover상황이면
+        {
+            if (this.CompareTag("Enemy") == true)//Enemy가 안보이게
+            {
+                this.gameObject.SetActive(false);//끔
+            }
+        }
+
+        this.transform.Translate(new Vector2(0, -moveSpeed * 0.1f));
+
+        if(isEnemyDead == true)
+        {//BulletScript수정해서 
+            this.transform.position = new Vector2(0, -6f);
+            is
+        }
+    }
+
+    void Move()
+    {
+        this.transform.Translate(new Vector2(0, -moveSpeed * 0.1f));
+
+    }
+}

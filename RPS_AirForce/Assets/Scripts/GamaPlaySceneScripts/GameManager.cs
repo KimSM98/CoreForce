@@ -27,9 +27,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isPlayerDead == true)//player가 죽으면
+        /*if(isPlayerDead == true)//player가 죽으면
         {
             //구름 움직이게, Enemy안보이게
-        }
+        }*/
     }
 }
