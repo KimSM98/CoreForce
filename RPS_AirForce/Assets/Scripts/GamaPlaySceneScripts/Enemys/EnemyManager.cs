@@ -13,11 +13,13 @@ public class EnemyManager : MonoBehaviour
     public int[,] EnemysProperties = new int[2, 3] { { 0, 1, 2 }, { 2, 0, 1 } };
 
 
-    int[] Enemy1CoreNum;//코어 개수
-
-
     public GameObject[] EnemyBullets;
     public float EnemyShootTerm = 1f;
+
+    int iBullet = 0;
+    int iEnemyNum = 0;
+    Vector2 bulletShootPos;
+
 
     float[] XposArr = { -2, 1, -1, 2, 0, 1 };
     float moveSpeed;
@@ -26,7 +28,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        int[] Enemy1CoreNum = { 1, 2 };
+        int[] Enemy1CoreNum = { 1, 2 };//core개수 바꾸기
         if (Enemy1.Length > 0)//효력이 없는 부분
         {
             for (int i = 0; i < Enemy1.Length; i++)
@@ -67,13 +69,19 @@ public class EnemyManager : MonoBehaviour
         if (iX == XposArr.Length)
             iX = 0;
     }
-    /*
-    void ShootEnemyBullet()
+ 
+    public GameObject GetBullet()
     {
-        for(int i=0; i)
-        EnemyBullets[iBullet].transform.position = new Vector2(Enemy1[i].transform.position.x, shootPos.transform.position.y);
+        iBullet++;
+        if (iBullet == 7)
+            iBullet = 0;
+
+        EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
-    }*/
+
+        return EnemyBullets[iBullet];
+    }
+
     void SetEnemyShootTerm()
     {
 

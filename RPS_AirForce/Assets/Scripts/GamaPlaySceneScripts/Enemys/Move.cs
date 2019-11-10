@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    public int ObjectType = 1;//
+    public int ObjectType = 0;//Enemy의 코어 개수 
     public float moveSpeed = 1;
     public int movingNum = 0; //좌표 넘버링
     public bool isEnemyLive = true;//Enemy가 살아있는지의 여부, 이름 수정할 예정
     //public bool isMoveOn = true;//움직이는 상황인지 체크
 
     private float xPos, yPos;
-    private float[] arrXPos;
-    private int arrNum = 0;
+
     private float objectSpeed;//object마다 public으로 다른 스피드를 갖고 있기 때문에
 
     float getX;
@@ -41,21 +40,7 @@ public class Move : MonoBehaviour
         //원래 있던 위치 받음
         xPos = this.transform.position.x;
         yPos = this.transform.position.y;
-        //Cloud Position
-        /*if(this.movingNum == 0)
-            arrXPos = new float[] { 1f, 2.5f, 3f, -2f, 0.5f, -0.5f }; 
-        else if (this.movingNum == 1)
-            arrXPos = new float[] { 2.5f, 0.5f, -1f, 2.5f, -2f, 3f };
-        else if (this.movingNum == 2)
-            arrXPos = new float[] { -1f, -2f, 1f, -0.5f, 1f, 1.5f };
-            */
-
-        //Enemy Position
-        if (this.movingNum == 3)
-            arrXPos = new float[] { -1f, 0f, 1f, 2f };
-        else if (this.movingNum == 4)
-            arrXPos = new float[] { 2f, 1.5f, -1f, -2f };
-        
+    
     }
 
     // Update is called once per frame
@@ -92,9 +77,7 @@ public class Move : MonoBehaviour
         {//카메라 아래로 나가면, x좌표 이동, y좌표를 위로 이동        
             Relocate();
         }
-        
-        if(arrNum == arrXPos.Length)
-            arrNum = 0;
+
     }
 
     void Relocate()
