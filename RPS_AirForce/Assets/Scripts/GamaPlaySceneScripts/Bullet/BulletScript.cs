@@ -39,10 +39,10 @@ public class BulletScript : MonoBehaviour
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
             }
-            if (isMove == true)
+            /*if (isMove == true)
             {
-                this.transform.Translate(new Vector2(0, -BulletSpeed * 0.1f));//아래로 이동
-            }
+                this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//아래로 이동
+            }*/
         }
         else//Player불렛일때
         {     
@@ -50,14 +50,18 @@ public class BulletScript : MonoBehaviour
             {
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
-            }
+            }/*
             if (isMove == true)
                 this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//위로 이동
+       */
         }
-        
-        
+        if (isMove == true)
+            this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//위로 이동
+
+
+
     }
-    
+
     void OnTriggerEnter2D(Collider2D coll)
     {
         //부딪힌게 뭐든지간에 총알을 숨김/Enemy끼지 부딪히면 없어지지 않게 한다
@@ -72,8 +76,8 @@ public class BulletScript : MonoBehaviour
                 Debug.Log("coll is Enemy");
 
                 //아래; enemy가 파괴된 것 처럼            
-                //그냥 다시 위로 이동(x좌표 다른 곳으로) 
-                coll.gameObject.GetComponent<Move>().isEnemyLive = false;
+                //다시 위로 이동(x좌표 다른 곳으로) 
+                coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
                 
                 //추가-Enemy종류마다 점수
                 GameManager.instance.playerScore += 100;
@@ -90,5 +94,10 @@ public class BulletScript : MonoBehaviour
             }
         }
        
+    }
+
+    public void SetBulletSpeed(float speed)
+    {
+        BulletSpeed = speed;
     }
 }

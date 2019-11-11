@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public int ObjectType = 0;//Enemy의 코어 개수 
     public float moveSpeed = 1;
-    public int movingNum = 0; //좌표 넘버링
     public bool isEnemyLive = true;//Enemy가 살아있는지의 여부, 이름 수정할 예정
     //public bool isMoveOn = true;//움직이는 상황인지 체크
 

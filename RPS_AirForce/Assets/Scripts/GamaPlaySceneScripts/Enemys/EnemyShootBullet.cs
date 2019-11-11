@@ -5,10 +5,9 @@ using UnityEngine;
 public class EnemyShootBullet : MonoBehaviour
 {
     public GameObject shootPos;//bullet발사 위치
-    public GameObject[] EnemytBulletObjs;//bullet sprite
     
 
-    public float public_shootTerm = 1.5f;//외부에서 조절
+    public float public_shootTerm;//외부에서 조절
 
     private int bulletNum=0;//bulletObjs 배열 번호
 
@@ -18,6 +17,7 @@ public class EnemyShootBullet : MonoBehaviour
     void Start()
     {
         bulletNum = 0;//bulletObjs 배열 번호
+        //shootTerm = GetComponent<EnemyManager>().SetEnemyShootTerm();
         //shootTerm = public_shootTerm;
         //shootTerm = 0f;//??????
     }
@@ -54,16 +54,15 @@ public class EnemyShootBullet : MonoBehaviour
     }
 
     public void EnemyShoot()
-    {    /*    
-        EnemytBulletObjs[bulletNum].transform.position = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, 0);
-        EnemytBulletObjs[bulletNum].gameObject.GetComponent<BulletScript>().isMove = true;
-        bulletNum++;
-        if (bulletNum == EnemytBulletObjs.Length)//0으로 초기화
-            bulletNum = 0;
-            */
+    {
         GetComponentInParent<EnemyManager>().GetBullet().transform.position = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, 0);
 
         isEnemyshoot = false;
+    }
+
+    public void SetShootTerm(float term)
+    {
+        public_shootTerm = term;
     }
 
    /* IEnumerator EnemyShooting()

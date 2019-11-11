@@ -64,9 +64,10 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\BGObjectMove.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Bullet\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\Enemy.cs" />
+    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyCore.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyManager.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyShootBullet.cs" />
-    <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\Move.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GamePlay_UIScript.cs" />
     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Item\ItemScript.cs" />

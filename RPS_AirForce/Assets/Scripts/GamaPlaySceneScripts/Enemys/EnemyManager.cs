@@ -7,6 +7,8 @@ public class EnemyManager : MonoBehaviour
     public float Speed_Type0 = 1;//일반 몹
     public float Speed_Type1 = 0;//보스 몹
     public float Speed_Type2 = 1.5f;//장애물
+    public float BulletSpeed = 0.5f;
+    public float EnemyShootTerm = 1f;
 
     public GameObject[] Enemy1;
     //start에서 랜덤으로 하는 것 추가하기 
@@ -14,14 +16,14 @@ public class EnemyManager : MonoBehaviour
 
 
     public GameObject[] EnemyBullets;
-    public float EnemyShootTerm = 1f;
+    
 
     int iBullet = 0;
     int iEnemyNum = 0;
     Vector2 bulletShootPos;
 
 
-    float[] XposArr = { -2, 1, -1, 2, 0, 1 };
+    float[] XposArr = { -1, 2, -0, -1, 2, 1 };
     float moveSpeed;
     float xPos = 0;
     int iX = 0;
@@ -33,14 +35,15 @@ public class EnemyManager : MonoBehaviour
         {
             for (int i = 0; i < Enemy1.Length; i++)
             {
-                Enemy1[i].GetComponent<Move>().SettingObj(0, Enemy1CoreNum[i]);
+                Enemy1[i].GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[i]);
                 
                 Debug.Log("ENCN: " + Enemy1CoreNum[i]);
             }
         }
+        SetBulletSpeed();
+        SetEnemyShootTerm();
     }
     
-
     public float GetMoveSpeed(int objectType)
     {
         if (objectType == 0)//일반몹
@@ -63,7 +66,7 @@ public class EnemyManager : MonoBehaviour
         return xPos;        
     }
 
-    public void AddiX()
+    void AddiX()
     {
         iX++;
         if (iX == XposArr.Length)
@@ -81,9 +84,19 @@ public class EnemyManager : MonoBehaviour
 
         return EnemyBullets[iBullet];
     }
+    void SetBulletSpeed()
+    {
+        for(int i=0; i < EnemyBullets.Length; i++)
+        {
+            EnemyBullets[i].GetComponent<BulletScript>().SetBulletSpeed(BulletSpeed);
+        }
+    }
 
     void SetEnemyShootTerm()
     {
-
+        for (int i = 0; i < Enemy1.Length; i++)
+        {
+            Enemy1[i].GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
+        }
     }
 }

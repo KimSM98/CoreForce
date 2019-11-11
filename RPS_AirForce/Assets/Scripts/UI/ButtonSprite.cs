@@ -14,12 +14,6 @@ public class ButtonSprite : MonoBehaviour
         this.GetComponent<Image>().sprite = ButtonSpr[0];
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void NextSprite()
     {
         i++;

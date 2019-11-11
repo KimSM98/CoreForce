@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public GameObject[] OffObjects;
+
     public bool isPlayerDead = false;//플레이어가 살아있는지의 여부
     public int playerScore = 0;
     public bool isMoveOn = true;//움직이는 상황인지 체크
@@ -27,9 +29,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(isPlayerDead == true)//player가 죽으면
+        if(isPlayerDead == true)
         {
-            //구름 움직이게, Enemy안보이게
-        }*/
+            OffObject();
+        }
+
+    }
+    void OffObject()
+    {
+        for (int i = 0; i < OffObjects.Length; i++)
+            OffObjects[i].SetActive(false);
+            
     }
 }
