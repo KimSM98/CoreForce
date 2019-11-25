@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int ObjectType = 0;//Enemy의 코어 개수 
+    public int ObjectType = 0;//0: 일반, 1: 보스, 2: 장애물
     public float moveSpeed = 1;
     public bool isEnemyLive = true;//Enemy가 살아있는지의 여부, 이름 수정할 예정
     //public bool isMoveOn = true;//움직이는 상황인지 체크
@@ -28,10 +28,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        if (ObjectType == 0)
-        {
-            ChangeEnemySprite();
-        }
+
+        ChangeEnemySprite();
         Debug.Log(cameraView.y + " " );
         
         objectSpeed = moveSpeed;//isMoveOn이 false에서 true로 바뀔때 원래의 속도를 받기위한 저장 변수
@@ -82,7 +80,8 @@ public class Enemy : MonoBehaviour
     void Relocate()
     {
             getX = GetComponentInParent<EnemyManager>().GetXPos();
-            this.transform.position = new Vector2(getX, 6f);//여기를 변경
+            this.transform.position = new Vector2(getX, 6f);//몬스터 스폰 텀을 넣고 싶으면 여기를 변경
+            
     }
 
     void ChangeEnemySprite()
@@ -91,12 +90,14 @@ public class Enemy : MonoBehaviour
         this.GetComponent<ObjectTypeScript>().ChangeSprite();
     }
 
-    public void SettingObj(int ObjType, int core_Num)
+    public void SettingObj(int ObjType, int core_Num)//일반 몬스터, 코어개수
     {
         ObjectType = ObjType;
         if (ObjType == 0)
             coreNum = core_Num;
         ChangeEnemySprite();
+        //코어Arr에서 코어의 위치를 EnemyCorePos의 위치로 한다.
+        //GetComponent<EnemyCore>().SetActiveCorePos(coreNum);
         Debug.Log("coreNum:" + coreNum);
     }
 }

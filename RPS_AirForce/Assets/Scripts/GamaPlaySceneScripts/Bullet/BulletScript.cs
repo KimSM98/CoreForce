@@ -9,7 +9,9 @@ public class BulletScript : MonoBehaviour
 
     float Xpos;
     float Ypos;
-
+    int thisType;
+    int collType;
+    bool isDraw = false;
     Vector3 cameraView;
 
     void Start()
@@ -63,10 +65,46 @@ public class BulletScript : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D coll)
-    {
+    {        
+        if(this.CompareTag("PlayerBullet")){
+            if(coll.CompareTag("EnemyBullet")){
+                thisType = this.GetComponent<ObjectTypeScript>().GetObjType();
+                collType = coll.GetComponent<ObjectTypeScript>().GetObjType();
+
+                if(IsWin(thisType, collType) == true){
+                    coll.GetComponent<BulletScript>().SetBulletPos();
+                }
+                else
+                {
+                    if(isDraw == true){
+                        coll.GetComponent<BulletScript>().SetBulletPos();
+                        isDraw = false;
+                    }                        
+                    SetBulletPos();
+                }
+            }
+
+            if(coll.CompareTag("Enemy")){
+                SetBulletPos();
+                coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
+                GameManager.instance.playerScore += 100;
+            }
+
+        }
+        if(this.CompareTag("EnemyBullet")){
+            if(coll.CompareTag("Player")){
+                coll.gameObject.SetActive(false);                
+                GameManager.instance.isPlayerDead = true;//player죽음 
+            }
+        }
+
+       
+
+        /* 
         //부딪힌게 뭐든지간에 총알을 숨김/Enemy끼지 부딪히면 없어지지 않게 한다
         this.gameObject.SetActive(false);
-        this.transform.position = new Vector2(Xpos, Ypos);
+        //this.transform.position = new Vector2(Xpos, Ypos);
+        SetBulletPos();
         this.gameObject.SetActive(true);
 
         if (this.gameObject.tag != "EnemyBullet")//Bullet이 PlayerBullet일때
@@ -92,12 +130,33 @@ public class BulletScript : MonoBehaviour
                 
                 GameManager.instance.isPlayerDead = true;//player죽음                
             }
-        }
+        } */
        
     }
+
+    bool IsWin(int thisType, int collType)//상성 체크
+    {
+        //이김
+        if (thisType == 0 && collType == 1 || thisType == 1 && collType == 2 || thisType == 2 && collType == 0)
+        {
+            return true;
+        }
+        else if(thisType == collType)
+            isDraw = true;
+
+        return false;
+    }    
 
     public void SetBulletSpeed(float speed)
     {
         BulletSpeed = speed;
     }
+
+    public void SetBulletPos()
+    {
+        this.transform.position = new Vector2(Xpos, Ypos);
+    }
+
+    
+
 }

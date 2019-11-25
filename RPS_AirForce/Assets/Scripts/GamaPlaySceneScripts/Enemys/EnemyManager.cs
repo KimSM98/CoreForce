@@ -12,17 +12,20 @@ public class EnemyManager : MonoBehaviour
 
     public GameObject[] Enemy1;
     //start에서 랜덤으로 하는 것 추가하기 
-    public int[,] EnemysProperties = new int[2, 3] { { 0, 1, 2 }, { 2, 0, 1 } };
 
+    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2  };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+    int[] Enemy1CoreNum= {0,1};//Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
+    int coreNum=0;
 
     public GameObject[] EnemyBullets;
-    
+    public GameObject[] Cores;
 
     int iBullet = 0;
-    int iEnemyNum = 0;
-    Vector2 bulletShootPos;
+    int iCore = 0;
 
+    //Vector2 bulletShootPos;
 
+    
     float[] XposArr = { -1, 2, -0, -1, 2, 1 };
     float moveSpeed;
     float xPos = 0;
@@ -30,18 +33,11 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        int[] Enemy1CoreNum = { 1, 2 };//core개수 바꾸기
-        if (Enemy1.Length > 0)//효력이 없는 부분
-        {
-            for (int i = 0; i < Enemy1.Length; i++)
-            {
-                Enemy1[i].GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[i]);
-                
-                Debug.Log("ENCN: " + Enemy1CoreNum[i]);
-            }
-        }
+        //core개수 바꾸기
+        SetObjType();
         SetBulletSpeed();
         SetEnemyShootTerm();
+        BulletSpeed = Speed_Type0 * 1.5f;
     }
     
     public float GetMoveSpeed(int objectType)
@@ -76,7 +72,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject GetBullet()
     {
         iBullet++;
-        if (iBullet == 7)
+        if (iBullet == EnemyBullets.Length)
             iBullet = 0;
 
         EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
@@ -84,6 +80,7 @@ public class EnemyManager : MonoBehaviour
 
         return EnemyBullets[iBullet];
     }
+
     void SetBulletSpeed()
     {
         for(int i=0; i < EnemyBullets.Length; i++)
@@ -97,6 +94,34 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < Enemy1.Length; i++)
         {
             Enemy1[i].GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
+        }
+    }
+    public GameObject GetCore()
+    {
+        iCore++;
+        if (iCore == Cores.Length)
+            iCore = 0;
+
+        return Cores[iCore];
+    }
+    void SetObjType()
+    {
+        if (Enemy1.Length > 0)//효력이 없는 부분
+        {
+            for (int i = 0; i < Enemy1.Length; i++)
+            {
+                Enemy1[i].GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
+                Enemy1[i].GetComponent<EnemyCore>().SetActiveCorePos(coreNum);
+
+                if (coreNum == 0)
+                    GetCore().transform.position = Enemy1[i].transform.position;
+                //GetCore().GetComponent<ItemScript>().SetCore(Enemy1[i].GetComponent<EnemyCore>().EnemyCorePos[0].transform.position, Speed_Type0, i);
+                //GetCore().transform.position = Enemy1[i].transform.position;
+
+                if (Enemy1CoreNum[coreNum] == Enemy1CoreNum.Length)
+                    coreNum = 0;
+                coreNum++;
+            }
         }
     }
 }

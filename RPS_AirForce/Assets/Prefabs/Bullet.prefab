@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4625592829720421210}
   - component: {fileID: 3794564569724537976}
   - component: {fileID: 6177608025298563767}
-  - component: {fileID: 2248295895847612066}
+  - component: {fileID: 5565278850389711075}
   - component: {fileID: 4724289640041913440}
   m_Layer: 0
   m_Name: Bullet
@@ -114,8 +114,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5aaa59bd4c8847e45843c5ff4c2577ff, type: 3}
   - {fileID: 21300000, guid: 76e4aeb15c59e4147be351adedd011d9, type: 3}
   - {fileID: 21300000, guid: c23215f9295bb574080ebab832e5a3bf, type: 3}
---- !u!70 &2248295895847612066
-CapsuleCollider2D:
+--- !u!60 &5565278850389711075
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -128,8 +128,21 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.56}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.18, y: 0.13}
+      - {x: 0, y: 0.32}
+      - {x: -0.18, y: 0.13}
+      - {x: 0, y: -0.3}
 --- !u!50 &4724289640041913440
 Rigidbody2D:
   serializedVersion: 4

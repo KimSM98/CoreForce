@@ -27,7 +27,7 @@ public class GamePlay_UIScript : MonoBehaviour
             restartButton.gameObject.SetActive(true);
             AttackButtons.SetActive(false);
         }
-        playerScoreText.text = "Score: " + GameManager.instance.playerScore;
+        playerScoreText.text = "" + GameManager.instance.playerScore;
     }
 
     public void RestartGame()
