@@ -65,7 +65,9 @@ public class Enemy : MonoBehaviour
 
         if (isEnemyLive == false)
         {
-            print("주금");
+            Debug.Log("Enemy Dead");
+            GetComponentInParent<EnemyManager>().DropCores(transform.position);
+
             this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
             isEnemyLive = true;
         }
@@ -90,11 +92,12 @@ public class Enemy : MonoBehaviour
         this.GetComponent<ObjectTypeScript>().ChangeSprite();
     }
 
-    public void SettingObj(int ObjType, int core_Num)//일반 몬스터, 코어개수
+    public void SettingObj(int ObjType, int core_Num)//Enemy1(일반몬스터), 코어개수
     {
         ObjectType = ObjType;
         if (ObjType == 0)
             coreNum = core_Num;
+
         ChangeEnemySprite();
         //코어Arr에서 코어의 위치를 EnemyCorePos의 위치로 한다.
         //GetComponent<EnemyCore>().SetActiveCorePos(coreNum);

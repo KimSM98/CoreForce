@@ -4,42 +4,39 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    #region 설정
     public float Speed_Type0 = 1;//일반 몹
     public float Speed_Type1 = 0;//보스 몹
     public float Speed_Type2 = 1.5f;//장애물
     public float BulletSpeed = 0.5f;
-    public float EnemyShootTerm = 1f;
-
-    public GameObject[] Enemy1;
-    //start에서 랜덤으로 하는 것 추가하기 
-
-    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2  };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-    int[] Enemy1CoreNum= {0,1};//Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
-    int coreNum=0;
-
+    public float EnemyShootTerm = 1f;    
+    #endregion
+    #region GameObject
     public GameObject[] EnemyBullets;
-    public GameObject[] Cores;
-
-    int iBullet = 0;
-    int iCore = 0;
-
-    //Vector2 bulletShootPos;
-
+    public GameObject[] Cores;//Enemy의 드롭 아이템
+    public GameObject[] Enemy1;
+    #endregion
+    #region Enemy_매번 변하는 값
+    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+    int[] Enemy1CoreNum= {0,1,2};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
+    float[] XposArr = { -1, 2, -0, -1, 2, 1 };//Enemy의 x좌표
+    #endregion
     
-    float[] XposArr = { -1, 2, -0, -1, 2, 1 };
+    int coreNum=0;
+    int iBullet = 0;
+    int dropCoreNum=0;//드롭할 코어의 i
+    int corePropertyNum=0;
+    int iX = 0;
     float moveSpeed;
     float xPos = 0;
-    int iX = 0;
-
     private void Start()
     {
         //core개수 바꾸기
-        SetObjType();
+        SetAllObjType();
         SetBulletSpeed();
         SetEnemyShootTerm();
         BulletSpeed = Speed_Type0 * 1.5f;
     }
-    
     public float GetMoveSpeed(int objectType)
     {
         if (objectType == 0)//일반몹
@@ -74,7 +71,7 @@ public class EnemyManager : MonoBehaviour
         iBullet++;
         if (iBullet == EnemyBullets.Length)
             iBullet = 0;
-
+        //여기에 Bullet의 속성
         EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
 
@@ -88,7 +85,6 @@ public class EnemyManager : MonoBehaviour
             EnemyBullets[i].GetComponent<BulletScript>().SetBulletSpeed(BulletSpeed);
         }
     }
-
     void SetEnemyShootTerm()
     {
         for (int i = 0; i < Enemy1.Length; i++)
@@ -96,32 +92,45 @@ public class EnemyManager : MonoBehaviour
             Enemy1[i].GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
         }
     }
-    public GameObject GetCore()
-    {
-        iCore++;
-        if (iCore == Cores.Length)
-            iCore = 0;
-
-        return Cores[iCore];
-    }
-    void SetObjType()
+    
+    void SetAllObjType()
     {
         if (Enemy1.Length > 0)//효력이 없는 부분
         {
             for (int i = 0; i < Enemy1.Length; i++)
             {
-                Enemy1[i].GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
-                Enemy1[i].GetComponent<EnemyCore>().SetActiveCorePos(coreNum);
-
-                if (coreNum == 0)
-                    GetCore().transform.position = Enemy1[i].transform.position;
-                //GetCore().GetComponent<ItemScript>().SetCore(Enemy1[i].GetComponent<EnemyCore>().EnemyCorePos[0].transform.position, Speed_Type0, i);
-                //GetCore().transform.position = Enemy1[i].transform.position;
-
-                if (Enemy1CoreNum[coreNum] == Enemy1CoreNum.Length)
-                    coreNum = 0;
-                coreNum++;
+                SetObjType(Enemy1[i]);         
             }
         }
     }
+    #region Enemy_매번 변하는 값의 함수
+    void SetObjType(GameObject Enemy){//EnemyType속성개수변경
+        Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
+        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[coreNum]);
+        //Enemy.GetComponent<EnemyCore>().SetCoreProperties(Enemy1CoreNum[coreNum], GetEnemyCoreProperty());
+        /*    
+        corePropertyNum++;
+        if(corePropertyNum == EnemysProperties.Length)
+            corePropertyNum=0;
+*/
+        coreNum++;
+        if (coreNum == Enemy1CoreNum.Length)
+            coreNum = 0;
+    }
+
+    public void DropCores(Vector3 EnemyPos){
+        Cores[dropCoreNum].transform.position = EnemyPos;
+        Cores[dropCoreNum].GetComponent<ItemScript>().isMove = true;
+
+        dropCoreNum++;
+
+        if(dropCoreNum == Cores.Length)
+            dropCoreNum=0;
+    }
+    
+    public int GetEnemyCoreProperty(){
+        return EnemysProperties[corePropertyNum];
+    }
+    
+    #endregion
 }

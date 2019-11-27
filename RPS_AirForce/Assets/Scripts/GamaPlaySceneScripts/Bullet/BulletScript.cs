@@ -86,7 +86,9 @@ public class BulletScript : MonoBehaviour
 
             if(coll.CompareTag("Enemy")){
                 SetBulletPos();
+                
                 coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
+                
                 GameManager.instance.playerScore += 100;
             }
 
@@ -97,41 +99,6 @@ public class BulletScript : MonoBehaviour
                 GameManager.instance.isPlayerDead = true;//player죽음 
             }
         }
-
-       
-
-        /* 
-        //부딪힌게 뭐든지간에 총알을 숨김/Enemy끼지 부딪히면 없어지지 않게 한다
-        this.gameObject.SetActive(false);
-        //this.transform.position = new Vector2(Xpos, Ypos);
-        SetBulletPos();
-        this.gameObject.SetActive(true);
-
-        if (this.gameObject.tag != "EnemyBullet")//Bullet이 PlayerBullet일때
-        {
-            if (coll.gameObject.tag == "Enemy")//Bullet에 맞은게 Enemy일때
-            {
-                Debug.Log("coll is Enemy");
-
-                //아래; enemy가 파괴된 것 처럼            
-                //다시 위로 이동(x좌표 다른 곳으로) 
-                coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
-                
-                //추가-Enemy종류마다 점수
-                GameManager.instance.playerScore += 100;
-            }
-        }
-        else if (this.gameObject.tag == "EnemyBullet")
-        {
-            //player와 부딪히면 게임 오버
-            if (coll.gameObject.tag == "Player")//Bullet에 맞은게 Player일때
-            {
-                coll.gameObject.SetActive(false);
-                
-                GameManager.instance.isPlayerDead = true;//player죽음                
-            }
-        } */
-       
     }
 
     bool IsWin(int thisType, int collType)//상성 체크

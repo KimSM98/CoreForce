@@ -4,39 +4,47 @@ using UnityEngine;
 
 public class EnemyCore : MonoBehaviour
 {
-    public GameObject[] EnemyCorePos;
-
-    int NumOfcore;
-
-    // Start is called before the first frame update
+    public GameObject[] EnemyCores;
+    public int[] EnemyCoreProperty;
     void Start()
     {
+        //OffCores();
+    }
+    
+    void OffCores(){//Enemy의 속성 개수가 바뀌면 끔
+        for(int i=0; i < EnemyCores.Length; i++){
+            EnemyCores[i].SetActive(false);
+        }
     }
 
-    public void SetActiveCorePos(int coreNum)
+    
+    public void SetActiveCorePos(int coreNum)//Enemy 속성 개수
     {
-        NumOfcore = coreNum;
-
         if (coreNum == 0)
         {
-            Debug.Log("코어1켜주세요" + EnemyCorePos[0].transform.position.x);
-            EnemyCorePos[0].SetActive(true);
-            //GetComponent<EnemyManager>().GetCore().transform.position = new Vector2(EnemyCorePos[0].transform.position.x, EnemyCorePos[0].transform.position.y);
-            //EnemyCorePos[0].SetActive(true);
-            
+            EnemyCores[0].SetActive(true);
+            EnemyCores[0].GetComponent<ObjectTypeScript>().Changetype(GetComponentInParent<EnemyManager>().GetEnemyCoreProperty());
+        
         }
             
         if (coreNum == 1)
         {
-            EnemyCorePos[1].SetActive(true);
-            EnemyCorePos[2].SetActive(true);
+            EnemyCores[1].SetActive(true);
+            EnemyCores[2].SetActive(true);
+            EnemyCores[1].GetComponent<ObjectTypeScript>().Changetype(GetComponentInParent<EnemyManager>().GetEnemyCoreProperty());
+            EnemyCores[2].GetComponent<ObjectTypeScript>().Changetype(GetComponentInParent<EnemyManager>().GetEnemyCoreProperty());
+            Debug.Log("222");
         }
         if (coreNum == 2)
         {
-            EnemyCorePos[3].SetActive(true);
-            EnemyCorePos[4].SetActive(true);
-            EnemyCorePos[5].SetActive(true);
+            EnemyCores[3].SetActive(true);
+            EnemyCores[4].SetActive(true);            
+            EnemyCores[5].SetActive(true);
         }
+    }
+
+    public void SetCoreProperties(int coreNum, int propertyNum){
+        
     }
 
 }

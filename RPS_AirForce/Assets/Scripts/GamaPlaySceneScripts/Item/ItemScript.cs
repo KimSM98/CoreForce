@@ -4,17 +4,13 @@ using UnityEngine;
 //코어를 먹으면 보스 등장, 버튼 피버 게이지 증가, 스코어 증가
 public class ItemScript : MonoBehaviour
 {
-    public Sprite[] Cores;
     public int Score;
+    public float CoreDropSpeed = 0.5f;
 
-    float CoreDropSpeed;
-
-    public bool isMove = false;
+    public bool isMove = false;//Enemy가 죽었으면 True
 
     float Xpos;
     float Ypos;
-
-
     int Enemy1Num;
 
     Vector3 cameraView;
@@ -40,22 +36,30 @@ public class ItemScript : MonoBehaviour
 
         if (isMove == true)
         {
-            GetEnemyPos();
+            this.transform.Translate(new Vector2(0, CoreDropSpeed * -0.1f));
+
+            if (cameraView.y < -0.3f){
+                this.transform.position = new Vector2(Xpos, Ypos);
+                isMove = false;
+            }
         }
 
     }
+    void OnTriggerEnter2D(Collider2D coll){
+        Debug.Log("Coll1");
+        if(coll.CompareTag("Player")){
+            Debug.Log("Coll2");
+            GameManager.instance.AddScore(Score);
 
-    public void SetCore(Vector3 Pos, float speed, int EnemyNum)
-    {
-        transform.position = Pos;
-        CoreDropSpeed = speed;
-        Enemy1Num = EnemyNum;
+            Relocate();
 
-        isMove = true;
+        }
     }
 
-    public void GetEnemyPos()
-    {
-        transform.position = GetComponent<EnemyManager>().Enemy1[Enemy1Num].transform.position;
+    void Relocate(){
+        this.gameObject.SetActive(false);
+        this.transform.position = new Vector2(Xpos, Ypos);
+        this.gameObject.SetActive(true);
     }
+
 }

@@ -41,4 +41,8 @@ public class GameManager : MonoBehaviour
             OffObjects[i].SetActive(false);
             
     }
+
+    public void AddScore(int score){
+        playerScore+=score;
+    }
 }
