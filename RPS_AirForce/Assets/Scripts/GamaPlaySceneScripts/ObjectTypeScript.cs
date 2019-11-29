@@ -17,7 +17,7 @@ public class ObjectTypeScript : MonoBehaviour
     }
     public void Changetype(int type){
         Type = type;        
-        this.GetComponent<SpriteRenderer>().sprite = Sprites[Type];
+        ChangeSprite();
     }
 
     public int GetObjType(){

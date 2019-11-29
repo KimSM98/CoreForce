@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
     #endregion
     #region Enemy_매번 변하는 값
     public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-    int[] Enemy1CoreNum= {0,1,2};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
+    int[] Enemy1CoreNum= {0,1,1};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
     float[] XposArr = { -1, 2, -0, -1, 2, 1 };//Enemy의 x좌표
     #endregion
     
@@ -66,12 +66,13 @@ public class EnemyManager : MonoBehaviour
             iX = 0;
     }
  
-    public GameObject GetBullet()
+    public GameObject GetBullet(int type)
     {
         iBullet++;
         if (iBullet == EnemyBullets.Length)
             iBullet = 0;
         //여기에 Bullet의 속성
+        EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().Changetype(type);
         EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
 
@@ -117,7 +118,15 @@ public class EnemyManager : MonoBehaviour
         if (coreNum == Enemy1CoreNum.Length)
             coreNum = 0;
     }
+/*
+    public int GetEnemyCoreNum(){
 
+        coreNum++;
+        if (coreNum == Enemy1CoreNum.Length)
+            coreNum = 0;
+
+        return Enemy1CoreNum[coreNum];
+    }*/
     public void DropCores(Vector3 EnemyPos){
         Cores[dropCoreNum].transform.position = EnemyPos;
         Cores[dropCoreNum].GetComponent<ItemScript>().isMove = true;
@@ -128,7 +137,12 @@ public class EnemyManager : MonoBehaviour
             dropCoreNum=0;
     }
     
-    public int GetEnemyCoreProperty(){
+    public int GetEnemyCoreProperty(){        
+        corePropertyNum++;
+
+        if(corePropertyNum == EnemysProperties.Length)
+            corePropertyNum = 0;
+
         return EnemysProperties[corePropertyNum];
     }
     

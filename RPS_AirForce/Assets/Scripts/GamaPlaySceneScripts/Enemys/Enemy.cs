@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
         }
 
         if (cameraView.y < -0.3f)
-        {//카메라 아래로 나가면, x좌표 이동, y좌표를 위로 이동        
+        {//카메라 아래로 나가면, x좌표 이동, y좌표를 위로 이동    
             Relocate();
         }
 

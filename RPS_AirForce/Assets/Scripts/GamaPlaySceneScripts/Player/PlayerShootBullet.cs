@@ -6,7 +6,7 @@ public class PlayerShootBullet : MonoBehaviour
 {
     public GameObject[] Bullets;
     public GameObject shootPos;//bullet발사 위치
-    
+    public GameObject PlayerCore;
     int i = 0;
 
     // Update is called once per frame
@@ -56,16 +56,19 @@ public class PlayerShootBullet : MonoBehaviour
 
     public void Button0Shoot()
     {
+        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
         ShootFire();
         ShootBullet();
     }
     public void Button1Shoot()
     {
+        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);
         ShootGrass();
         ShootBullet();
     }
     public void Button2Shoot()
     {
+        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(2);
         ShootWater();
         ShootBullet();
     }

@@ -55,7 +55,8 @@ public class EnemyShootBullet : MonoBehaviour
 
     public void EnemyShoot()
     {
-        GetComponentInParent<EnemyManager>().GetBullet().transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+        int type = this.GetComponent<EnemyCore>().GetCoreProperty();
+        GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
 
         isEnemyshoot = false;
     }
