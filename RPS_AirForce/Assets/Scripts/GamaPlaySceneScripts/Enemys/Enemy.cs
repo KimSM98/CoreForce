@@ -63,10 +63,11 @@ public class Enemy : MonoBehaviour
         //GameObject가 계속 아래로 내려가게 
         this.transform.Translate(new Vector2(0, moveSpeed * 0.1f));
 
-        if (isEnemyLive == false)
+        if (isEnemyLive == false)//Enemy죽음
         {
             Debug.Log("Enemy Dead");
-            GetComponentInParent<EnemyManager>().DropCores(transform.position);
+
+            GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
             this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
             isEnemyLive = true;

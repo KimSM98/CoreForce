@@ -14,13 +14,16 @@ public class ButtonSprite : MonoBehaviour
         this.GetComponent<Image>().sprite = ButtonSpr[0];
     }
 
-    void NextSprite()
+    public void NextSprite(int num)
     {
+        if(num<5)
+            this.GetComponent<Image>().sprite = ButtonSpr[num];
+        /*
         i++;
         this.GetComponent<Image>().sprite = ButtonSpr[i];
         if (i == ButtonSpr.Length)
         {
             i = 0;
-        }
+        }*/
     }
 }

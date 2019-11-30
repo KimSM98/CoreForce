@@ -12,9 +12,11 @@ public class EnemyManager : MonoBehaviour
     public float EnemyShootTerm = 1f;    
     #endregion
     #region GameObject
+    public GameObject BossEnemy;
+    public GameObject[] Enemy1;
     public GameObject[] EnemyBullets;
     public GameObject[] Cores;//Enemy의 드롭 아이템
-    public GameObject[] Enemy1;
+    
     #endregion
     #region Enemy_매번 변하는 값
     public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
@@ -25,10 +27,12 @@ public class EnemyManager : MonoBehaviour
     int coreNum=0;
     int iBullet = 0;
     int dropCoreNum=0;//드롭할 코어의 i
-    int corePropertyNum=0;
+    int corePropertyNum=-1;
     int iX = 0;
     float moveSpeed;
     float xPos = 0;
+    GameObject core;
+
     private void Start()
     {
         //core개수 바꾸기
@@ -73,7 +77,7 @@ public class EnemyManager : MonoBehaviour
             iBullet = 0;
         //여기에 Bullet의 속성
         EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().Changetype(type);
-        EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
+        //EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
 
         return EnemyBullets[iBullet];
@@ -127,23 +131,31 @@ public class EnemyManager : MonoBehaviour
 
         return Enemy1CoreNum[coreNum];
     }*/
-    public void DropCores(Vector3 EnemyPos){
-        Cores[dropCoreNum].transform.position = EnemyPos;
-        Cores[dropCoreNum].GetComponent<ItemScript>().isMove = true;
-
-        dropCoreNum++;
-
-        if(dropCoreNum == Cores.Length)
-            dropCoreNum=0;
+    public void DropCores(Vector3 EnemyPos, int coreNum, int[] cores){
+        for(int i=0; i < coreNum+1; i++){            
+            GetCoreObj();
+            core.GetComponent<ObjectTypeScript>().Changetype(cores[i]);
+            core.transform.position = new Vector3(EnemyPos.x, EnemyPos.y+ i*0.2f);
+            //core.transform.position = EnemyPos;
+            core.GetComponent<ItemScript>().isMove = true;
+        }       
     }
     
-    public int GetEnemyCoreProperty(){        
+    public int GetEnemyCoreProperty(){        //나중에 위에 변수에 -1이라고 한것 고치기
         corePropertyNum++;
 
         if(corePropertyNum == EnemysProperties.Length)
             corePropertyNum = 0;
 
         return EnemysProperties[corePropertyNum];
+    }
+
+    void GetCoreObj(){
+        core = Cores[dropCoreNum];
+        
+        dropCoreNum++;
+        if(dropCoreNum == Cores.Length)
+            dropCoreNum=0;
     }
     
     #endregion

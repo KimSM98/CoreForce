@@ -26,14 +26,7 @@ public class ItemScript : MonoBehaviour
     void Update()
     {
         cameraView = Camera.main.WorldToViewportPoint(transform.position);
-        /*
-        if (cameraView.y < -0.3f)//카메라 밖에 나가면, 움직임을 멈추고 원래 있던 자리로
-        {//몬스터가 죽어서 플레이어가 먹었을때 사용?
-            //isMove = false;
-            //this.transform.position = new Vector2(Xpos, Ypos);
-            GetEnemyPos();
-        }*/
-
+        
         if (isMove == true)
         {
             this.transform.Translate(new Vector2(0, CoreDropSpeed * -0.1f));
@@ -46,11 +39,10 @@ public class ItemScript : MonoBehaviour
 
     }
     void OnTriggerEnter2D(Collider2D coll){
-        Debug.Log("Coll1");
-        if(coll.CompareTag("Player")){
-            Debug.Log("Coll2");
-            GameManager.instance.AddScore(Score);
-
+        if(coll.CompareTag("Player")){            
+            GameManager.instance.AddScore(Score, GetComponent<ObjectTypeScript>().GetObjType());
+            //GetComponent<GameManager>().AddPropertyCount(GetComponent<ObjectTypeScript>().GetObjType());
+            //.AddPropertyCount(GetComponent<ObjectTypeScript>().GetObjType());
             Relocate();
 
         }

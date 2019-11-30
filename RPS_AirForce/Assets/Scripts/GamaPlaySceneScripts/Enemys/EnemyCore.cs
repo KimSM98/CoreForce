@@ -7,7 +7,8 @@ public class EnemyCore : MonoBehaviour
     public GameObject[] EnemyCores;
     //int[] EnemyCoreProperty = {0,0,0};
     int[] EnemyCoreProperty;
-    int corePropertyNum =0;
+    int numOfCoreProperty = 0;
+    int random;
     void Start()
     {
         //OffCores();
@@ -18,9 +19,11 @@ public class EnemyCore : MonoBehaviour
             EnemyCores[i].SetActive(false);
         }
     }
-    public void SetActiveCorePos(int coreNum)//Enemy 속성 개수
+    public void SetActiveCorePos(int coreNum)//추후에 이름 바꿀 것//Enemy 속성 개수
     {
+        numOfCoreProperty = coreNum;
         SetCoreProperties(coreNum);
+
         if (coreNum == 0)
         {
             //SetCoreProperties(coreNum);
@@ -62,13 +65,19 @@ public class EnemyCore : MonoBehaviour
     }
 
     public int GetCoreProperty(){
-
+        random = Random.Range(0,EnemyCoreProperty.Length);
+        /*
         corePropertyNum++;
         
         if(corePropertyNum == EnemyCoreProperty.Length)
             corePropertyNum = 0;
 
-        return EnemyCoreProperty[corePropertyNum];
+        return EnemyCoreProperty[corePropertyNum];*/
+        return EnemyCoreProperty[random];
+    }
+
+    public int[] GetEnemyCorePropertyArr(){
+        return EnemyCoreProperty;
     }
 
 }
