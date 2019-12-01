@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     Vector3 cameraView;
 
     public int coreNum;
-
+    int hp=10;
     void Awake()
     {
         moveSpeed = GetComponentInParent<EnemyManager>().GetMoveSpeed(ObjectType);
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
 
-        ChangeEnemySprite();
+        //ChangeEnemySprite();
         Debug.Log(cameraView.y + " " );
         
         objectSpeed = moveSpeed;//isMoveOn이 false에서 true로 바뀔때 원래의 속도를 받기위한 저장 변수
@@ -65,17 +65,17 @@ public class Enemy : MonoBehaviour
 
         if (isEnemyLive == false)//Enemy죽음
         {
-            Debug.Log("Enemy Dead");
-
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
             this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
             isEnemyLive = true;
         }
 
-        if (cameraView.y < -0.3f)
+        if (cameraView.y < -0.3f)//카메라 아래로 내려가면
         {//카메라 아래로 나가면, x좌표 이동, y좌표를 위로 이동    
             Relocate();
+            //리셋
+            GetComponentInParent<EnemyManager>().SetObjType(this.gameObject);//죽었을때와도 같은 상황
         }
 
     }
@@ -96,12 +96,21 @@ public class Enemy : MonoBehaviour
     public void SettingObj(int ObjType, int core_Num)//Enemy1(일반몬스터), 코어개수
     {
         ObjectType = ObjType;
-        if (ObjType == 0)
+        if (ObjType == 0){
             coreNum = core_Num;
+            ChangeEnemySprite();
+        }
+        else if(ObjType == 1){
+            coreNum = core_Num;
+        }
+    }
 
-        ChangeEnemySprite();
-        //코어Arr에서 코어의 위치를 EnemyCorePos의 위치로 한다.
-        //GetComponent<EnemyCore>().SetActiveCorePos(coreNum);
-        Debug.Log("coreNum:" + coreNum);
+    public void SubBossHp(){
+        hp--;
+        if(hp==0){
+            this.gameObject.SetActive(false);
+            hp=10;
+        }
+            
     }
 }

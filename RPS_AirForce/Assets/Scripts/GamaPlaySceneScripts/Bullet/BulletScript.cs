@@ -41,10 +41,6 @@ public class BulletScript : MonoBehaviour
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
             }
-            /*if (isMove == true)
-            {
-                this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//아래로 이동
-            }*/
         }
         else//Player불렛일때
         {     
@@ -52,10 +48,7 @@ public class BulletScript : MonoBehaviour
             {
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
-            }/*
-            if (isMove == true)
-                this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//위로 이동
-       */
+            }
         }
         if (isMove == true)
             this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//위로 이동
@@ -86,9 +79,12 @@ public class BulletScript : MonoBehaviour
 
             if(coll.CompareTag("Enemy")){
                 SetBulletPos();
-                
-                coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
-                
+                if(coll.GetComponent<Enemy>().ObjectType != 1)
+                    coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;
+                    
+                if(coll.GetComponent<Enemy>().ObjectType == 1){
+                    coll.GetComponent<Enemy>().SubBossHp();
+                }
                 GameManager.instance.playerScore += 100;
             }
 

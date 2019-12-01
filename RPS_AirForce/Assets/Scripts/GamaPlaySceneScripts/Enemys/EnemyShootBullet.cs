@@ -7,19 +7,13 @@ public class EnemyShootBullet : MonoBehaviour
     public GameObject shootPos;//bullet발사 위치
     
 
-    public float public_shootTerm;//외부에서 조절
-
-    private int bulletNum=0;//bulletObjs 배열 번호
+    float public_shootTerm;//외부에서 조절
 
     private bool isEnemyshoot = false;//이것을 사용해서 쏘고 안쏘게 함
     private float shootTerm;//발사 텀
 
     void Start()
     {
-        bulletNum = 0;//bulletObjs 배열 번호
-        //shootTerm = GetComponent<EnemyManager>().SetEnemyShootTerm();
-        //shootTerm = public_shootTerm;
-        //shootTerm = 0f;//??????
     }
 
     // Update is called once per frame
@@ -32,24 +26,16 @@ public class EnemyShootBullet : MonoBehaviour
             if (isEnemyshoot == true)
             {
                 EnemyShoot();//발사
-                shootTerm = public_shootTerm;//초기화
+                shootTerm = 0;//초기화
+                isEnemyshoot = false;
             }
-            if (shootTerm > 0)//0보다 크면
-            {
-                shootTerm -= Time.deltaTime;
-
+            if(isEnemyshoot == false){
+                shootTerm += Time.deltaTime;
             }
-            //Debug.Log(shootTerm);
-
-            if (shootTerm <= 0)
-            {
+            if(shootTerm >= public_shootTerm)                
                 isEnemyshoot = true;
-            }
+          
         }
-        /*
-        if (bulletNum == EnemytBulletObjs.Length)//0으로 초기화
-            bulletNum = 0;
-            */
         
     }
 
@@ -64,6 +50,7 @@ public class EnemyShootBullet : MonoBehaviour
     public void SetShootTerm(float term)
     {
         public_shootTerm = term;
+        shootTerm = public_shootTerm;
     }
 
    /* IEnumerator EnemyShooting()

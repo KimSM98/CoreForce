@@ -7,70 +7,135 @@ public class PlayerShootBullet : MonoBehaviour
     public GameObject[] Bullets;
     public GameObject shootPos;//bullet발사 위치
     public GameObject PlayerCore;
-    int i = 0;
-
-    // Update is called once per frame
-    void Update()
+    public GameObject[] Buttons;
+    int bulletNum = 0;
+    //작업중
+    public bool[] IsButtonFeverOn;
+    bool[] feverTimeDuration;
+    
+    void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            ShootFire();
-            ShootBullet();
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ShootGrass();
-            ShootBullet();
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ShootWater();
-            ShootBullet();
-        }
+        IsButtonFeverOn = new bool[3]{false, false, false};
+        feverTimeDuration = new bool[3]{false,false,false};
     }
 
-    void ShootBullet()
+    void ShootBullet()//일반 공격
     {
-        Bullets[i].GetComponent<ObjectTypeScript>().ChangeSprite();
-        Bullets[i].transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
-        Bullets[i].GetComponent<BulletScript>().isMove = true;
-        i++;
-        if (i == Bullets.Length)
-            i = 0;        
+        Bullets[bulletNum].GetComponent<ObjectTypeScript>().ChangeSprite();
+        Bullets[bulletNum].transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+        Bullets[bulletNum].GetComponent<BulletScript>().isMove = true;
+
+        bulletNum++;
+
+        if (bulletNum == Bullets.Length)
+            bulletNum = 0;        
     }
 
+    void ShootSkill(int type){
+        float skillShooPos = shootPos.transform.position.x -0.6f;
+
+            for(int i=0; i<3; i++){
+                Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = type;
+                Bullets[bulletNum].GetComponent<ObjectTypeScript>().ChangeSprite();
+                Bullets[bulletNum].transform.position = new Vector2(skillShooPos + 0.6f*i , shootPos.transform.position.y);
+                Bullets[bulletNum].GetComponent<BulletScript>().isMove = true;
+                bulletNum++;
+
+                if (bulletNum == Bullets.Length)
+                    bulletNum = 0;
+            }
+    }
+
+#region 미사일 발사 함수
     void ShootFire()
     {
-        Bullets[i].GetComponent<ObjectTypeScript>().Type = 0;
+        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 0;
     }
 
     void ShootGrass()
     {
-        Bullets[i].GetComponent<ObjectTypeScript>().Type = 1;
+        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 1;
     }
 
     void ShootWater()
     {
-        Bullets[i].GetComponent<ObjectTypeScript>().Type = 2;
+        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 2;
     }
+#endregion
 
     public void Button0Shoot()
-    {
+    {//색을 바꿔줘야함 3개
         PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
-        ShootFire();
-        ShootBullet();
+        
+        if(IsButtonFeverOn[0] == false){
+            if(feverTimeDuration[0] == false){
+                ShootFire();
+                ShootBullet();
+            }
+            else if(feverTimeDuration[0]==true)
+                ShootSkill(0);
+            
+        }
+            
+        else if(IsButtonFeverOn[0] == true){
+            StartCoroutine(SkillCoroutine(0));
+        }
+            
     }
     public void Button1Shoot()
     {
         PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);
-        ShootGrass();
-        ShootBullet();
+        
+        
+        if(IsButtonFeverOn[1] == false){
+            if(feverTimeDuration[1] == false){
+                ShootGrass();
+                ShootBullet();
+            }
+            else if(feverTimeDuration[1]==true)
+                ShootSkill(1);
+            
+        }
+            
+        else if(IsButtonFeverOn[1] == true){
+            StartCoroutine(SkillCoroutine(1));
+        }
     }
     public void Button2Shoot()
     {
         PlayerCore.GetComponent<ObjectTypeScript>().Changetype(2);
-        ShootWater();
-        ShootBullet();
+
+        if(IsButtonFeverOn[2] == false){
+            if(feverTimeDuration[2] == false){
+                ShootWater();
+                ShootBullet();
+            }
+            else if(feverTimeDuration[2]==true)
+                ShootSkill(2);
+        }
+        
+        else if(IsButtonFeverOn[2] == true){
+            StartCoroutine(SkillCoroutine(2));
+        }
     }
 
+    public void SetIsButtonFever(bool answer, int BP){
+        IsButtonFeverOn[BP] = answer;
+    }
+    IEnumerator SkillCoroutine(int type){
+        IsButtonFeverOn[type] = false;
+        feverTimeDuration[type] = true;
+
+        yield return new WaitForSeconds(0.5f);
+        Buttons[type].GetComponent<ButtonSprite>().SetCount(3);
+        yield return new WaitForSeconds(0.5f);
+        Buttons[type].GetComponent<ButtonSprite>().SetCount(2);
+        yield return new WaitForSeconds(0.5f);
+        Buttons[type].GetComponent<ButtonSprite>().SetCount(1);        
+        yield return new WaitForSeconds(0.5f);        
+        Buttons[type].GetComponent<ButtonSprite>().SetCount(0);
+        
+        
+        feverTimeDuration[type]= false;
+    }
 }

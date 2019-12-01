@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    public GameObject EnemyManager;
     public GameObject[] OffObjects;
 
     public bool isPlayerDead = false;//플레이어가 살아있는지의 여부
@@ -57,10 +57,18 @@ public class GameManager : MonoBehaviour
 
     void AddPropertyCount(int type){
         coresPropertyCount[type] +=1;
-        AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);
+        AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
 
-        if(coresPropertyCount[0] >= 4 && coresPropertyCount[1] >= 4 && coresPropertyCount[2] >= 4)
-            isBossFever=true;
+        if(coresPropertyCount[0] >= 4 && coresPropertyCount[1] >= 4 && coresPropertyCount[2] >= 4){
+            isBossFever=true;//보스 등장
+            ////임시
+            coresPropertyCount[0] = 0;
+            coresPropertyCount[1] = 0;
+            coresPropertyCount[2] = 0;
+            EnemyManager.GetComponent<EnemyManager>().AppearBoss();
+            Debug.Log("보스 등장");
+        }
+            
         
         Debug.Log("Core: " + coresPropertyCount[0] + " " + coresPropertyCount[1] + " " +coresPropertyCount[2]);
     }

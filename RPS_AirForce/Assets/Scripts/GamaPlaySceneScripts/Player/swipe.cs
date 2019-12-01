@@ -24,7 +24,7 @@ public class swipe : MonoBehaviour
     {
         mousePosition = pos;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        if(-0.9f< mousePosition.x && mousePosition.x <= 2.2f &&  mousePosition.y < -4f)
+        if(-0.9f< mousePosition.x && mousePosition.x <= 2.2f &&  mousePosition.y < 4f)
             this.transform.position = new Vector2(mousePosition.x, this.transform.position.y);
     }
 
