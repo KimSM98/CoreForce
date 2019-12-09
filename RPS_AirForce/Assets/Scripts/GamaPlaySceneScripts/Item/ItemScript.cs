@@ -12,7 +12,7 @@ public class ItemScript : MonoBehaviour
     float Xpos;
     float Ypos;
     int Enemy1Num;
-
+    int spinSpeed =1;
     Vector3 cameraView;
 
     // Start is called before the first frame update
@@ -28,12 +28,14 @@ public class ItemScript : MonoBehaviour
         cameraView = Camera.main.WorldToViewportPoint(transform.position);
         
         if (isMove == true)
-        {
+        {        
             this.transform.Translate(new Vector2(0, CoreDropSpeed * -0.1f));
+            SpinItem();
 
             if (cameraView.y < -0.3f){
-                this.transform.position = new Vector2(Xpos, Ypos);
-                isMove = false;
+                /*this.transform.position = new Vector2(Xpos, Ypos);
+                isMove = false;*/
+                Relocate();
             }
         }
 
@@ -41,17 +43,23 @@ public class ItemScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D coll){
         if(coll.CompareTag("Player")){            
             GameManager.instance.AddScore(Score, GetComponent<ObjectTypeScript>().GetObjType());
-            //GetComponent<GameManager>().AddPropertyCount(GetComponent<ObjectTypeScript>().GetObjType());
-            //.AddPropertyCount(GetComponent<ObjectTypeScript>().GetObjType());
+            
             Relocate();
 
         }
+    }
+
+    void SpinItem(){
+        if(transform.localScale.x >= 1 || transform.localScale.x <= 0)
+            spinSpeed *= -1;
+        transform.localScale += new Vector3(0.05f*spinSpeed,0,0);
     }
 
     void Relocate(){
         this.gameObject.SetActive(false);
         this.transform.position = new Vector2(Xpos, Ypos);
         this.gameObject.SetActive(true);
+        isMove=false;
     }
 
 }

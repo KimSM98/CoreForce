@@ -135,6 +135,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   isEnemyLive: 1
   coreNum: 0
+  hp: 10
 --- !u!114 &8305576119427954258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootPos: {fileID: 4928169227926234957}
-  public_shootTerm: 0.5
 --- !u!114 &7222536670364688902
 MonoBehaviour:
   m_ObjectHideFlags: 0

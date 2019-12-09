@@ -5,12 +5,12 @@ using UnityEngine;
 public class EnemyShootBullet : MonoBehaviour
 {
     public GameObject shootPos;//bullet발사 위치
-    
-
+  
     float public_shootTerm;//외부에서 조절
 
     private bool isEnemyshoot = false;//이것을 사용해서 쏘고 안쏘게 함
     private float shootTerm;//발사 텀
+    int type;
 
     void Start()
     {
@@ -41,9 +41,36 @@ public class EnemyShootBullet : MonoBehaviour
 
     public void EnemyShoot()
     {
-        int type = this.GetComponent<EnemyCore>().GetCoreProperty();
-        GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+        
+        if(this.GetComponent<Enemy>().ObjectType != 1){
+            type = this.GetComponent<EnemyCore>().GetCoreProperty();
+            GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+        }
+            
+        if(this.GetComponent<Enemy>().ObjectType == 1){
+            if(GetComponent<Enemy>().hp <=10){
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetSkillBullet(type).transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+                
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetSkillBullet(type).transform.position = new Vector2(shootPos.transform.position.x-1.15f, shootPos.transform.position.y+1f);
 
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetSkillBullet(type).transform.position = new Vector2(shootPos.transform.position.x+1.0f, shootPos.transform.position.y+1f);
+           
+            }
+            else{
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
+        
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x-1.15f, shootPos.transform.position.y+1f);
+            
+                type = this.GetComponent<EnemyCore>().GetCoreProperty();
+                GetComponentInParent<EnemyManager>().GetBullet(type).transform.position = new Vector2(shootPos.transform.position.x+1.0f, shootPos.transform.position.y+1f);
+            }
+            
+        }
         isEnemyshoot = false;
     }
 

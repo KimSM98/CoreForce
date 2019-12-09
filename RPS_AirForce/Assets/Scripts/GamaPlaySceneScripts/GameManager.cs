@@ -13,11 +13,14 @@ public class GameManager : MonoBehaviour
     public int playerScore = 0;
     public bool isMoveOn = true;//움직이는 상황인지 체크
     
-
-////작업중
     int[] coresPropertyCount = {0,0,0};
     public GameObject[] AttackButtons;
     public bool isBossFever = false;//보스 등장 여부
+    public GameObject[] BossUI;
+
+    
+////작업중
+    public int EnemySpawnNum=4;
 
     void Awake()
     {
@@ -28,7 +31,9 @@ public class GameManager : MonoBehaviour
     {
         isPlayerDead = false;//게임이 시작될때 초기화        
         isMoveOn = true;//시작할때는 움직임ON
-
+        for(int i=0; i<3; i++){
+            BossUI[i].SetActive(false);
+        }
         playerScore = 0;
     }
 
@@ -59,24 +64,33 @@ public class GameManager : MonoBehaviour
         coresPropertyCount[type] +=1;
         AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
 
-        if(coresPropertyCount[0] >= 4 && coresPropertyCount[1] >= 4 && coresPropertyCount[2] >= 4){
+        if(coresPropertyCount[0] >= EnemySpawnNum){
+            BossUI[0].SetActive(true);
+        }
+        if(coresPropertyCount[1] >= EnemySpawnNum){
+            BossUI[1].SetActive(true);
+        }
+        if(coresPropertyCount[2] >= EnemySpawnNum){
+            BossUI[2].SetActive(true);
+        }
+        if(coresPropertyCount[0] >= EnemySpawnNum && coresPropertyCount[1] >= EnemySpawnNum && coresPropertyCount[2] >= EnemySpawnNum){
             isBossFever=true;//보스 등장
-            ////임시
-            coresPropertyCount[0] = 0;
-            coresPropertyCount[1] = 0;
-            coresPropertyCount[2] = 0;
-            EnemyManager.GetComponent<EnemyManager>().AppearBoss();
             Debug.Log("보스 등장");
+        }
+        if(isBossFever == true){
+            EnemyManager.GetComponent<EnemyManager>().AppearBoss();
+            isBossFever = false;
         }
             
         
         Debug.Log("Core: " + coresPropertyCount[0] + " " + coresPropertyCount[1] + " " +coresPropertyCount[2]);
     }
 
-    void ResetPropertyCount()//보스 잡으면 초기화
+    public void ResetPropertyCount()//보스 잡으면 초기화
     {
         for(int i=0; i<3; i++){
             coresPropertyCount[i] = 0;
+            BossUI[i].SetActive(false);
         }
     }
 }

@@ -18,7 +18,12 @@ public class Enemy : MonoBehaviour
     Vector3 cameraView;
 
     public int coreNum;
-    int hp=10;
+    #region Boss
+    public int hp=30;
+    int hpT=0;
+    float xspeed =0.05f;
+    #endregion
+    bool isLowHP = false;
     void Awake()
     {
         moveSpeed = GetComponentInParent<EnemyManager>().GetMoveSpeed(ObjectType);
@@ -28,7 +33,8 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-
+        if(ObjectType==1)
+            hpT=hp;
         //ChangeEnemySprite();
         Debug.Log(cameraView.y + " " );
         
@@ -78,6 +84,27 @@ public class Enemy : MonoBehaviour
             GetComponentInParent<EnemyManager>().SetObjType(this.gameObject);//죽었을때와도 같은 상황
         }
 
+        if(ObjectType == 1){
+            
+            this.transform.Translate(new Vector2(0.1f*xspeed, 0));
+
+            if(this.transform.position.x > 1.5f){
+                xspeed*=-1;
+            }
+            else if(this.transform.position.x<0.06f)
+                xspeed*=-1;
+
+            if(hp<=10 && !isLowHP){
+                StartCoroutine(ShowAngryMode());
+                isLowHP = true;
+            }
+            else if(hp > 10)
+            {
+               GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,1f);
+               isLowHP = false;
+            }
+        }
+
     }
 
     void Relocate()
@@ -107,10 +134,23 @@ public class Enemy : MonoBehaviour
 
     public void SubBossHp(){
         hp--;
-        if(hp==0){
+        if(hp<=0){
             this.gameObject.SetActive(false);
-            hp=10;
+            GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
+            GameManager.instance.ResetPropertyCount();
+            //instance.GetComponent<GameManager>().ResetPropertyCount();            
+            hp=hpT;                        
         }
             
     }
+    IEnumerator ShowAngryMode(){
+        while(true)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(0.6f,0,0);
+            yield return new WaitForSeconds(0.5f);
+            GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,1f);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+    
 }

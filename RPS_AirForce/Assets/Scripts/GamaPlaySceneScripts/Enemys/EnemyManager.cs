@@ -19,19 +19,21 @@ public class EnemyManager : MonoBehaviour
     
     #endregion
     #region Enemy_매번 변하는 값
-    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+    public int[] EnemysProperties = new int[] { 2, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
     int[] Enemy1CoreNum= {0,1,2};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
     float[] XposArr = { -1, 2, -0, -1, 2, 1 };//Enemy의 x좌표
     #endregion
     
     int coreNum=0;
     int iBullet = 0;
+    int sBullet =0;
     int dropCoreNum=0;//드롭할 코어의 i
     int corePropertyNum=-1;
     int iX = 0;
     float moveSpeed;
     float xPos = 0;
     GameObject core;
+    public GameObject[] SkillBullet;
 
     private void Start()
     {
@@ -82,6 +84,16 @@ public class EnemyManager : MonoBehaviour
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
 
         return EnemyBullets[iBullet];
+    }
+
+    public GameObject GetSkillBullet(int type){
+        sBullet++;
+        if (sBullet == SkillBullet.Length)
+            sBullet = 0;
+        SkillBullet[sBullet].GetComponent<ObjectTypeScript>().Changetype(type);
+        SkillBullet[sBullet].GetComponent<BulletScript>().isMove = true;
+
+        return SkillBullet[sBullet];
     }
 
     void SetBulletSpeed()
