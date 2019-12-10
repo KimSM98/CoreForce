@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GamePlay_UIScript.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Item\ItemScript.cs" />
+     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\MainManager.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\ObjectTypeScript.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Player\PlayerShootBullet.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Player\swipe.cs" />

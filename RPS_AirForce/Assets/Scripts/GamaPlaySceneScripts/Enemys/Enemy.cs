@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
     float getX;
 
     Vector3 cameraView;
-
     public int coreNum;
     #region Boss
     public int hp=30;
@@ -24,6 +23,9 @@ public class Enemy : MonoBehaviour
     float xspeed =0.05f;
     #endregion
     bool isLowHP = false;
+
+    public GameObject ExplosionParticle;
+
     void Awake()
     {
         moveSpeed = GetComponentInParent<EnemyManager>().GetMoveSpeed(ObjectType);
@@ -35,9 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if(ObjectType==1)
             hpT=hp;
-        //ChangeEnemySprite();
-        Debug.Log(cameraView.y + " " );
-        
+        //ChangeEnemySprite();        
         objectSpeed = moveSpeed;//isMoveOn이 false에서 true로 바뀔때 원래의 속도를 받기위한 저장 변수
 
         //원래 있던 위치 받음
@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
 
         if (isEnemyLive == false)//Enemy죽음
         {
+            PlayParticle();
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
             this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
@@ -135,6 +136,7 @@ public class Enemy : MonoBehaviour
     public void SubBossHp(){
         hp--;
         if(hp<=0){
+            PlayParticle();
             this.gameObject.SetActive(false);
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
             GameManager.instance.ResetPropertyCount();
@@ -153,4 +155,8 @@ public class Enemy : MonoBehaviour
         }
     }
     
+    void PlayParticle(){
+        ExplosionParticle.transform.position = this.transform.position;
+        ExplosionParticle.GetComponent<ParticleSystem>().Play();
+    }
 }

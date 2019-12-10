@@ -11,19 +11,18 @@ public class GameManager : MonoBehaviour
 
     public bool isPlayerDead = false;//플레이어가 살아있는지의 여부
     public int playerScore = 0;
+    public int PlayerBestScore=0;
     public bool isMoveOn = true;//움직이는 상황인지 체크
     
     int[] coresPropertyCount = {0,0,0};
     public GameObject[] AttackButtons;
     public bool isBossFever = false;//보스 등장 여부
     public GameObject[] BossUI;
-
-    
-////작업중
-    public int EnemySpawnNum=4;
+    public int BossSpawnNum=4;
 
     void Awake()
     {
+        Debug.Log("저장"+ PlayerPrefs.HasKey("BestScore") + PlayerPrefs.GetInt("BestScore"));
         instance = this;
     }
 
@@ -43,6 +42,7 @@ public class GameManager : MonoBehaviour
         if(isPlayerDead == true)
         {
             OffObject();
+            GetComponent<MainManager>().SaveScore(playerScore);
         }
 
     }
@@ -64,16 +64,16 @@ public class GameManager : MonoBehaviour
         coresPropertyCount[type] +=1;
         AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
 
-        if(coresPropertyCount[0] >= EnemySpawnNum){
+        if(coresPropertyCount[0] >= BossSpawnNum){
             BossUI[0].SetActive(true);
         }
-        if(coresPropertyCount[1] >= EnemySpawnNum){
+        if(coresPropertyCount[1] >= BossSpawnNum){
             BossUI[1].SetActive(true);
         }
-        if(coresPropertyCount[2] >= EnemySpawnNum){
+        if(coresPropertyCount[2] >= BossSpawnNum){
             BossUI[2].SetActive(true);
         }
-        if(coresPropertyCount[0] >= EnemySpawnNum && coresPropertyCount[1] >= EnemySpawnNum && coresPropertyCount[2] >= EnemySpawnNum){
+        if(coresPropertyCount[0] >= BossSpawnNum && coresPropertyCount[1] >= BossSpawnNum && coresPropertyCount[2] >= BossSpawnNum){
             isBossFever=true;//보스 등장
             Debug.Log("보스 등장");
         }
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         }
             
         
-        Debug.Log("Core: " + coresPropertyCount[0] + " " + coresPropertyCount[1] + " " +coresPropertyCount[2]);
+        //Debug.Log("Core: " + coresPropertyCount[0] + " " + coresPropertyCount[1] + " " +coresPropertyCount[2]);
     }
 
     public void ResetPropertyCount()//보스 잡으면 초기화

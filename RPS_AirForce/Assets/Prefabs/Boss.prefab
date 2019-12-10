@@ -165,6 +165,7 @@ MonoBehaviour:
   isEnemyLive: 1
   coreNum: 0
   hp: 10
+  ExplosionParticle: {fileID: 0}
 --- !u!114 &3807870481600688037
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerShootBullet : MonoBehaviour
 {
     public GameObject[] Bullets;
@@ -12,11 +12,14 @@ public class PlayerShootBullet : MonoBehaviour
     //작업중
     public bool[] IsButtonFeverOn;
     bool[] feverTimeDuration;
-    
+    public GameObject[] particles;
     void Start()
     {
         IsButtonFeverOn = new bool[3]{false, false, false};
         feverTimeDuration = new bool[3]{false,false,false};
+        for(int i = 0; i< particles.Length; i++){
+            particles[i].GetComponent<ParticleSystem>().Stop();
+        }
     }
 
     void ShootBullet()//일반 공격
@@ -64,7 +67,7 @@ public class PlayerShootBullet : MonoBehaviour
 #endregion
 
     public void Button0Shoot()
-    {//색을 바꿔줘야함 3개
+    {
         PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
         
         if(IsButtonFeverOn[0] == false){
@@ -84,8 +87,7 @@ public class PlayerShootBullet : MonoBehaviour
     }
     public void Button1Shoot()
     {
-        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);
-        
+        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);        
         
         if(IsButtonFeverOn[1] == false){
             if(feverTimeDuration[1] == false){
@@ -118,7 +120,6 @@ public class PlayerShootBullet : MonoBehaviour
             StartCoroutine(SkillCoroutine(2));
         }
     }
-
     public void SetIsButtonFever(bool answer, int BP){
         IsButtonFeverOn[BP] = answer;
     }
@@ -126,16 +127,27 @@ public class PlayerShootBullet : MonoBehaviour
         IsButtonFeverOn[type] = false;
         feverTimeDuration[type] = true;
 
+        StartParticle(true, type);
+
         yield return new WaitForSeconds(0.5f);
         Buttons[type].GetComponent<ButtonSprite>().SetCount(3);
+
         yield return new WaitForSeconds(0.5f);
         Buttons[type].GetComponent<ButtonSprite>().SetCount(2);
+
         yield return new WaitForSeconds(0.5f);
         Buttons[type].GetComponent<ButtonSprite>().SetCount(1);        
+
         yield return new WaitForSeconds(0.5f);        
         Buttons[type].GetComponent<ButtonSprite>().SetCount(0);
-        
-        
+        StartParticle(false, type);        
         feverTimeDuration[type]= false;
+    }
+
+    void StartParticle(bool isStart, int type){
+        if(isStart == true)
+            particles[type].GetComponent<ParticleSystem>().Play();
+        else if(isStart == false)
+            particles[type].GetComponent<ParticleSystem>().Stop();
     }
 }

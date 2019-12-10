@@ -11,12 +11,12 @@ public class swipe : MonoBehaviour
     Button button1;
 
     Vector3 cameraView;
-
+    Touch myTouch;
     void Update()
     {
         if(Input.touchCount >0)
         {
-            Touch myTouch = Input.GetTouch(0);
+            myTouch = Input.GetTouch(0);
             Drag(myTouch.position);
         }
     }

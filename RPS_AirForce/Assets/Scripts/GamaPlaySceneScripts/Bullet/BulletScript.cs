@@ -77,7 +77,7 @@ public class BulletScript : MonoBehaviour
                 }
             }
 
-            if(coll.CompareTag("Enemy")){
+            if(coll.CompareTag("Enemy")){                
                 SetBulletPos();
                 if(coll.GetComponent<Enemy>().ObjectType != 1)
                     coll.gameObject.GetComponent<Enemy>().isEnemyLive = false;

@@ -8,6 +8,7 @@ public class GamePlay_UIScript : MonoBehaviour
 {
     public GameObject gameOverUI;
     public Text playerScoreText;
+    public Text BestScoreText;
     public Button restartButton;
     public GameObject AttackButtons;
 
@@ -16,6 +17,10 @@ public class GamePlay_UIScript : MonoBehaviour
     {
         gameOverUI.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        
+        if(PlayerPrefs.HasKey("BestScore") != false)
+            BestScoreText.text = "" + PlayerPrefs.GetInt("BestScore");
+            
     }
 
     // Update is called once per frame

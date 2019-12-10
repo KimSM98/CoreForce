@@ -8,7 +8,6 @@ public class ButtonSprite : MonoBehaviour
     public Sprite[] ButtonSpr;
     public int ButtonPrperty = 0; //0:Fire, 1: Grass, 2: water
     public GameObject Player;
-    int i = 0;
     int count=0;
     bool isButtonfever = false;
     void Start()
@@ -38,7 +37,8 @@ public class ButtonSprite : MonoBehaviour
     public void SetCount(int num){
         count = num;
         if(num == 0)
-            isButtonfever=false;        
+            isButtonfever=false;   
+        
         this.GetComponent<Image>().sprite = ButtonSpr[count];
     }
 }
