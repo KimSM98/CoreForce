@@ -93,4 +93,12 @@ public class GameManager : MonoBehaviour
             BossUI[i].SetActive(false);
         }
     }
+        public void Pause(){
+        Debug.Log("정지버튼"+Time.timeScale);
+
+        if(Time.timeScale == 1)
+            Time.timeScale = 0;
+        else if(Time.timeScale == 0)
+            Time.timeScale = 1;
+    }
 }

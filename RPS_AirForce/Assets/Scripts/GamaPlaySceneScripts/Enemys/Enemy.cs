@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     #region Boss
     public int hp=30;
     int hpT=0;
-    float xspeed =0.05f;
+    float xspeed =1f;
     #endregion
     bool isLowHP = false;
 
@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
         }
         
         //GameObject가 계속 아래로 내려가게 
-        this.transform.Translate(new Vector2(0, moveSpeed * 0.1f));
+        this.transform.Translate(new Vector2(0, moveSpeed * Time.deltaTime));
 
         if (isEnemyLive == false)//Enemy죽음
         {
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
 
         if(ObjectType == 1){
             
-            this.transform.Translate(new Vector2(0.1f*xspeed, 0));
+            this.transform.Translate(new Vector2(xspeed* Time.deltaTime, 0));
 
             if(this.transform.position.x > 1.5f){
                 xspeed*=-1;

@@ -6,7 +6,6 @@ public class MainManager : MonoBehaviour
 {
     public void SaveScore(int score){
         if(score > PlayerPrefs.GetInt("BestScore") || PlayerPrefs.HasKey("BestScore") == false){
-            Debug.Log("저장"+ PlayerPrefs.HasKey("BestScore"));
             PlayerPrefs.SetInt("BestScore", score); 
         }
             

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveMap : MonoBehaviour
 {
-    public float Speed = 0.5f;
+    public float Speed = 2f;
     public GameObject[] MapStars;
 
     int StarNum = 0;
@@ -26,15 +26,7 @@ public class MoveMap : MonoBehaviour
         {
             MapStars[StarNum].transform.position = new Vector2(0, 10f);
             StarNum++;
-            Debug.Log("다음 " + StarNum);
         }
-            
-            
-       /* if (this.transform.position.y < -9f)
-            this.transform.position = firstPos;
-            */
-        this.transform.Translate(new Vector2(0, Speed * -0.1f));
-
-        //MapStars[StarNum].transform.Translate(new Vector2(0, Speed * -0.1f));
+        this.transform.Translate(new Vector2(0, -Speed * Time.deltaTime));
     }
 }

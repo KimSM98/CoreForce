@@ -44,14 +44,14 @@ public class BulletScript : MonoBehaviour
         }
         else//Player불렛일때
         {     
-            if (cameraView.y > 1f)//카메라 밖에 나가면, 움직임을 멈추고 원래 있던 자리로
+            if (cameraView.y > 0.95f)//카메라 밖에 나가면, 움직임을 멈추고 원래 있던 자리로
             {
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
             }
         }
         if (isMove == true)
-            this.transform.Translate(new Vector2(0, BulletSpeed * 0.1f));//위로 이동
+            this.transform.Translate(new Vector2(0, BulletSpeed * Time.deltaTime));//위로 이동
 
 
 

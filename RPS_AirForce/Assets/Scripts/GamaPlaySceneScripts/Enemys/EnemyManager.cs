@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
     public float Speed_Type2 = 1.5f;//장애물
     public float BulletSpeed = 0.5f;
     public float EnemyShootTerm = 1f;    
+    public float BossShootTerm = 0.5f;
     #endregion
     #region GameObject
     public GameObject BossEnemy;
@@ -62,7 +63,6 @@ public class EnemyManager : MonoBehaviour
         iX++;
         if (iX == XposArr.Length)
             iX = 0;
-        Debug.Log(iX + " l:" + XposArr.Length);
         return xPos;        
     }
 
@@ -110,7 +110,7 @@ public class EnemyManager : MonoBehaviour
             Enemy1[i].GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
         }
         //보스작업중
-        BossEnemy.GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
+        BossEnemy.GetComponent<EnemyShootBullet>().SetShootTerm(BossShootTerm);
     }
     
     void SetAllObjType()

@@ -11,10 +11,13 @@ public class GamePlay_UIScript : MonoBehaviour
     public Text BestScoreText;
     public Button restartButton;
     public GameObject AttackButtons;
-
+    public Button PauseButton;
+    public GameObject PauseButtons;
+    public Button[] SoundButtons;
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         gameOverUI.SetActive(false);
         restartButton.gameObject.SetActive(false);
         
@@ -38,5 +41,24 @@ public class GamePlay_UIScript : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene("GamePlayScene");
+    }
+
+    public void Pause(){
+        if(Time.timeScale == 1){
+            PauseButton.gameObject.SetActive(false);
+            PauseButtons.SetActive(true);
+            Time.timeScale = 0;
+        }
+            
+        else if(Time.timeScale == 0){
+            PauseButton.gameObject.SetActive(true);
+            PauseButtons.SetActive(false);
+            Time.timeScale = 1;
+        }
+            
+    }
+
+    public void SoundOnOff(){
+        
     }
 }

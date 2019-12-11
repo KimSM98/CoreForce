@@ -68,57 +68,66 @@ public class PlayerShootBullet : MonoBehaviour
 
     public void Button0Shoot()
     {
-        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
+        if(Time.deltaTime != 0){
+           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
         
-        if(IsButtonFeverOn[0] == false){
-            if(feverTimeDuration[0] == false){
-                ShootFire();
-                ShootBullet();
+            if(IsButtonFeverOn[0] == false){
+                if(feverTimeDuration[0] == false){
+                    ShootFire();
+                    ShootBullet();
+                }
+                else if(feverTimeDuration[0]==true)
+                    ShootSkill(0);
+                
             }
-            else if(feverTimeDuration[0]==true)
-                ShootSkill(0);
-            
+                
+            else if(IsButtonFeverOn[0] == true){
+                StartCoroutine(SkillCoroutine(0));
+            } 
         }
-            
-        else if(IsButtonFeverOn[0] == true){
-            StartCoroutine(SkillCoroutine(0));
-        }
+        
             
     }
     public void Button1Shoot()
     {
-        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);        
+        if(Time.deltaTime != 0){
+           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);        
         
-        if(IsButtonFeverOn[1] == false){
-            if(feverTimeDuration[1] == false){
-                ShootGrass();
-                ShootBullet();
+            if(IsButtonFeverOn[1] == false){
+                if(feverTimeDuration[1] == false){
+                    ShootGrass();
+                    ShootBullet();
+                }
+                else if(feverTimeDuration[1]==true)
+                    ShootSkill(1);
+                
             }
-            else if(feverTimeDuration[1]==true)
-                ShootSkill(1);
-            
+                
+            else if(IsButtonFeverOn[1] == true){
+                StartCoroutine(SkillCoroutine(1));
+            } 
         }
-            
-        else if(IsButtonFeverOn[1] == true){
-            StartCoroutine(SkillCoroutine(1));
-        }
+        
     }
     public void Button2Shoot()
     {
-        PlayerCore.GetComponent<ObjectTypeScript>().Changetype(2);
+        if(Time.deltaTime != 0){
+           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(2);
 
-        if(IsButtonFeverOn[2] == false){
-            if(feverTimeDuration[2] == false){
-                ShootWater();
-                ShootBullet();
+            if(IsButtonFeverOn[2] == false){
+                if(feverTimeDuration[2] == false){
+                    ShootWater();
+                    ShootBullet();
+                }
+                else if(feverTimeDuration[2]==true)
+                    ShootSkill(2);
             }
-            else if(feverTimeDuration[2]==true)
-                ShootSkill(2);
+            
+            else if(IsButtonFeverOn[2] == true){
+                StartCoroutine(SkillCoroutine(2));
+            } 
         }
         
-        else if(IsButtonFeverOn[2] == true){
-            StartCoroutine(SkillCoroutine(2));
-        }
     }
     public void SetIsButtonFever(bool answer, int BP){
         IsButtonFeverOn[BP] = answer;

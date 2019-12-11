@@ -5,14 +5,14 @@ using UnityEngine;
 public class ItemScript : MonoBehaviour
 {
     public int Score;
-    public float CoreDropSpeed = 0.5f;
+    public float CoreDropSpeed = 3f;
 
     public bool isMove = false;//Enemy가 죽었으면 True
 
     float Xpos;
     float Ypos;
     int Enemy1Num;
-    int spinSpeed =1;
+    public int spinSpeed = 2;
     Vector3 cameraView;
 
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class ItemScript : MonoBehaviour
         
         if (isMove == true)
         {        
-            this.transform.Translate(new Vector2(0, CoreDropSpeed * -0.1f));
+            this.transform.Translate(new Vector2(0, -CoreDropSpeed * Time.deltaTime));
             SpinItem();
 
             if (cameraView.y < -0.3f){
@@ -52,7 +52,7 @@ public class ItemScript : MonoBehaviour
     void SpinItem(){
         if(transform.localScale.x >= 1 || transform.localScale.x <= 0)
             spinSpeed *= -1;
-        transform.localScale += new Vector3(0.05f*spinSpeed,0,0);
+        transform.localScale += new Vector3(spinSpeed * Time.deltaTime,0,0);
     }
 
     void Relocate(){
