@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GamePlay_UIScript : MonoBehaviour
 {
-    public GameObject gameOverUI;
+    //public GameObject gameOverUI;
+    public Canvas GameUICanvas;
     public Text playerScoreText;
     public Text BestScoreText;
-    public Button restartButton;
+    public GameObject GameOverUI;
+    public Text[] GameOverTexts;
     public GameObject AttackButtons;
     public Button PauseButton;
     public GameObject PauseButtons;
@@ -18,8 +20,8 @@ public class GamePlay_UIScript : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
-        gameOverUI.SetActive(false);
-        restartButton.gameObject.SetActive(false);
+        //gameOverUI.SetActive(false);
+        GameOverUI.gameObject.SetActive(false);
         
         if(PlayerPrefs.HasKey("BestScore") != false)
             BestScoreText.text = "" + PlayerPrefs.GetInt("BestScore");
@@ -31,9 +33,12 @@ public class GamePlay_UIScript : MonoBehaviour
     {
         if (GameManager.instance.isPlayerDead == true)//GameOver상황
         {
-            gameOverUI.SetActive(true);
-            restartButton.gameObject.SetActive(true);
-            AttackButtons.SetActive(false);
+            GameUICanvas.gameObject.SetActive(false);
+            
+            GameOverTexts[0].text = "BEST\n" + PlayerPrefs.GetInt("BestScore");
+            GameOverTexts[1].text = "SCORE\n" + GameManager.instance.playerScore;
+            GameOverUI.gameObject.SetActive(true);
+            
         }
         playerScoreText.text = "" + GameManager.instance.playerScore;
     }

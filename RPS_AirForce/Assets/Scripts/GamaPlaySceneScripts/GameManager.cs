@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //추가- 게임 오버되면 Enemy안보이게
 public class GameManager : MonoBehaviour
@@ -17,8 +18,11 @@ public class GameManager : MonoBehaviour
     int[] coresPropertyCount = {0,0,0};
     public GameObject[] AttackButtons;
     public bool isBossFever = false;//보스 등장 여부
-    public GameObject[] BossUI;
+    public Image[] BossUI;
     public int BossSpawnNum=4;
+//작업중
+    public int difficulty = 0; //0:Easy 1: Medium 2: Hard
+
 
     void Awake()
     {
@@ -31,7 +35,7 @@ public class GameManager : MonoBehaviour
         isPlayerDead = false;//게임이 시작될때 초기화        
         isMoveOn = true;//시작할때는 움직임ON
         for(int i=0; i<3; i++){
-            BossUI[i].SetActive(false);
+            BossUI[i].gameObject.SetActive(false);
         }
         playerScore = 0;
     }
@@ -45,18 +49,32 @@ public class GameManager : MonoBehaviour
             GetComponent<MainManager>().SaveScore(playerScore);
         }
 
+
+
     }
     void OffObject()
     {
         for (int i = 0; i < OffObjects.Length; i++)
-            OffObjects[i].SetActive(false);
+            OffObjects[i].gameObject.SetActive(false);
             
     }
 
     public void AddScore(int score, int coreType){
         playerScore+=score;
         AddPropertyCount(coreType);
-        //버튼 초기화
+
+        if(difficulty < 2){
+            if(playerScore >= 10000 ){
+                difficulty++;
+                EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);            
+            }
+            else if(playerScore>=5000){
+                difficulty++;
+                EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);       
+            }
+            
+                       
+        }
         
     }
 
@@ -65,13 +83,13 @@ public class GameManager : MonoBehaviour
         AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
 
         if(coresPropertyCount[0] >= BossSpawnNum){
-            BossUI[0].SetActive(true);
+            BossUI[0].gameObject.SetActive(true);
         }
         if(coresPropertyCount[1] >= BossSpawnNum){
-            BossUI[1].SetActive(true);
+            BossUI[1].gameObject.SetActive(true);
         }
         if(coresPropertyCount[2] >= BossSpawnNum){
-            BossUI[2].SetActive(true);
+            BossUI[2].gameObject.SetActive(true);
         }
         if(coresPropertyCount[0] >= BossSpawnNum && coresPropertyCount[1] >= BossSpawnNum && coresPropertyCount[2] >= BossSpawnNum){
             isBossFever=true;//보스 등장
@@ -90,10 +108,10 @@ public class GameManager : MonoBehaviour
     {
         for(int i=0; i<3; i++){
             coresPropertyCount[i] = 0;
-            BossUI[i].SetActive(false);
+            BossUI[i].gameObject.SetActive(false);
         }
     }
-        public void Pause(){
+    public void Pause(){
         Debug.Log("정지버튼"+Time.timeScale);
 
         if(Time.timeScale == 1)

@@ -12,7 +12,8 @@ public class ItemScript : MonoBehaviour
     float Xpos;
     float Ypos;
     int Enemy1Num;
-    public int spinSpeed = 2;
+    public float spinSpeed = 0.5f;
+    float temp;
     Vector3 cameraView;
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class ItemScript : MonoBehaviour
     {
         Xpos = this.transform.position.x;
         Ypos = this.transform.position.y;
+        temp = spinSpeed;
     }
 
     // Update is called once per frame
@@ -29,15 +31,17 @@ public class ItemScript : MonoBehaviour
         
         if (isMove == true)
         {        
-            this.transform.Translate(new Vector2(0, -CoreDropSpeed * Time.deltaTime));
-            SpinItem();
-
-            if (cameraView.y < -0.3f){
-                /*this.transform.position = new Vector2(Xpos, Ypos);
-                isMove = false;*/
+            if (cameraView.y < -0.3f){                
                 Relocate();
-            }
+            }//Time.deltaTime
+            this.transform.Translate(new Vector2(0, -CoreDropSpeed *Time.deltaTime));
+            SpinItem();
         }
+        //임시
+        /*if(Time.deltaTime == 0)
+            spinSpeed = 0;
+        else if(Time.deltaTime!=0)
+            spinSpeed = temp;*/
 
     }
     void OnTriggerEnter2D(Collider2D coll){
@@ -50,9 +54,12 @@ public class ItemScript : MonoBehaviour
     }
 
     void SpinItem(){
-        if(transform.localScale.x >= 1 || transform.localScale.x <= 0)
+        
+        transform.localScale += new Vector3(spinSpeed * 0.1f,0,0);
+    
+        if(transform.localScale.x > 1 || transform.localScale.x < 0)
             spinSpeed *= -1;
-        transform.localScale += new Vector3(spinSpeed * Time.deltaTime,0,0);
+            
     }
 
     void Relocate(){

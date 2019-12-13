@@ -9,8 +9,8 @@ public class EnemyManager : MonoBehaviour
     public float Speed_Type1 = 0;//보스 몹
     public float Speed_Type2 = 1.5f;//장애물
     public float BulletSpeed = 0.5f;
-    public float EnemyShootTerm = 1f;    
-    public float BossShootTerm = 0.5f;
+    public float EnemyShootTerm = 1f;   // 1, 0.75, 0.5 
+    public float BossShootTerm = 0.75f;
     #endregion
     #region GameObject
     public GameObject BossEnemy;
@@ -21,8 +21,9 @@ public class EnemyManager : MonoBehaviour
     #endregion
     #region Enemy_매번 변하는 값
     public int[] EnemysProperties = new int[] { 2, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-    int[] Enemy1CoreNum= {0,1,2};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
-    float[] XposArr = { -1, 2, -0, -1, 2, 1 };//Enemy의 x좌표
+    int[,] Enemy1CoreNum= {{0,0,0,0}, {1,0,1,1}, {2,1,2,2}};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
+    float[] XposArr = { -1, 0.5f, 2, -0, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy의 x좌표
+    //-1, -0.3, 0.5 1.2 1.75 2.4
     #endregion
     
     int coreNum=0;
@@ -36,6 +37,9 @@ public class EnemyManager : MonoBehaviour
     GameObject core;
     public GameObject[] SkillBullet;
 
+    //작업중
+    int difficulty=0;
+
     private void Start()
     {
         //core개수 바꾸기
@@ -44,6 +48,8 @@ public class EnemyManager : MonoBehaviour
         SetBulletSpeed();
         SetEnemyShootTerm();
         BulletSpeed = Speed_Type0 * 1.5f;
+
+        
     }
     public float GetMoveSpeed(int objectType)
     {
@@ -127,11 +133,12 @@ public class EnemyManager : MonoBehaviour
     #region Enemy_매번 변하는 값의 함수
     public void SetObjType(GameObject Enemy){//EnemyType속성개수변경
         Enemy.GetComponent<EnemyCore>().OffCores();
-        Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
-        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[coreNum]);
+        Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[difficulty,coreNum]);
+        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[difficulty, coreNum]);
 
         coreNum++;
-        if (coreNum == Enemy1CoreNum.Length)
+        //if (coreNum == Enemy1CoreNum.Length)
+        if (coreNum == 3)
             coreNum = 0;
     }
     //보스 작업중
@@ -149,7 +156,7 @@ public class EnemyManager : MonoBehaviour
         }       
     }
     
-    public int GetEnemyCoreProperty(){        //나중에 위에 변수에 -1이라고 한것 고치기
+    public int GetEnemyCoreProperty(){//접근        //나중에 위에 변수에 -1이라고 한것 고치기
         corePropertyNum++;
 
         if(corePropertyNum == EnemysProperties.Length)
@@ -171,4 +178,16 @@ public class EnemyManager : MonoBehaviour
     }
     
     #endregion
+
+    public void changeDifficulty(int num){
+        difficulty = num;
+        if(difficulty == 1)
+            EnemyShootTerm = 0.75f;
+        else if(difficulty ==2)
+            EnemyShootTerm = 0.5f;
+            
+        SetEnemyShootTerm();
+    }
+
+    
 }
