@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public static EnemyManager instance;
     #region 설정
     public float Speed_Type0 = 1;//일반 몹
     public float Speed_Type1 = 0;//보스 몹
@@ -11,22 +12,24 @@ public class EnemyManager : MonoBehaviour
     public float BulletSpeed = 0.5f;
     public float EnemyShootTerm = 1f;   // 1, 0.75, 0.5 
     public float BossShootTerm = 0.75f;
+    public float AppearMeteorTerm = 10f;
     #endregion
     #region GameObject
     public GameObject BossEnemy;
     public GameObject[] Enemy1;
+    public GameObject[] Meteors;
     public GameObject[] EnemyBullets;
     public GameObject[] Cores;//Enemy의 드롭 아이템
     
     #endregion
     #region Enemy_매번 변하는 값
     public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-    //public int[] EnemysProperties = new int[] { 0, 0, 0 , 0, 0, 0 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-
+  
     int[] Enemy1CoreNum= {0,1,2};
-    //int[,] Enemy1CoreNum= {{0,0,0,0}, {1,0,1,1}, {2,1,2,2}};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
     float[] XposArr = { -1, 1.75f, -0.3f, 1.2f, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy의 x좌표
     //-1, -0.3, 0.5 1.2 1.75 2.4
+    float[] MeteorsXpos = {-1.1f, 2.0f, 0, 1.5f};
+    int meteorPosNum = 0;
     #endregion
     
     int coreNum=0;
@@ -44,6 +47,8 @@ public class EnemyManager : MonoBehaviour
     int difficulty=0;
     private void Start()
     {
+        instance = this;
+
         //core개수 바꾸기
         BossEnemy.SetActive(false);
         SetAllObjType();
@@ -138,12 +143,6 @@ public class EnemyManager : MonoBehaviour
         Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[difficulty]);
         Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[difficulty]);
 
-        /*Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
-        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[coreNum]);
-
-        coreNum++;
-        if(coreNum == Enemy1CoreNum.Length)
-            coreNum = 0;*/
     }
     //보스 작업중
     void SetBossData(){
@@ -185,13 +184,33 @@ public class EnemyManager : MonoBehaviour
 
     public void changeDifficulty(int num){
         difficulty = num;
-        if(difficulty == 1)
+        if(difficulty == 1){
+            EnemyShootTerm = 0.85f;
+            Meteors[0].SetActive(true);
+            Meteors[0].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
+        }
+            
+        else if(difficulty ==2){
             EnemyShootTerm = 0.75f;
-        else if(difficulty ==2)
-            EnemyShootTerm = 0.5f;
+            //Meteors[0].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
+            Meteors[1].SetActive(true);
+            Meteors[1].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
+            Meteors[2].SetActive(true);
+            Meteors[2].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
+        
+        }
+            
             
         SetEnemyShootTerm();
     }
 
-    
+    //작업중
+    public float GetMeteorPos(){
+        int num = meteorPosNum;
+        meteorPosNum++;
+        if(meteorPosNum == MeteorsXpos.Length)
+            meteorPosNum = 0;
+
+        return MeteorsXpos[num];
+    }
 }

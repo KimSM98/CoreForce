@@ -32,7 +32,7 @@ public class MainUIScript : MonoBehaviour
     void Update()
     {
         if(isPlayerMove == true){
-            PlayerIcon.transform.Translate(new Vector3(0,0.1f*0.75f,0));
+            PlayerIcon.transform.Translate(new Vector3(0,0.1f,0));
             if(PlayerIcon.transform.position.y > 5.25f){
                 SceneManager.LoadScene("GamePlayScene");
                 isPlayerMove=false;

@@ -20,6 +20,13 @@ public class swipe : MonoBehaviour
             Drag(myTouch.position);
         }
     }
+    void OnTriggerEnter2D(Collider2D coll){
+        if(coll.CompareTag("Enemy")){
+            this.gameObject.SetActive(false);
+            GameManager.instance.isPlayerDead = true;
+            SoundManager.instance.PlayerDeadSound();
+        }
+    }
     public void Drag(Vector2 pos)
     {
         mousePosition = pos;

@@ -65,4 +65,16 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void MeteorSound(){
+        if(PlayerPrefs.GetInt("IsSoundOn") == 1){
+            Sounds[6].GetComponent<AudioSource>().Play();
+        }
+    }
+
+    public void BossAppearSound(){
+        if(PlayerPrefs.GetInt("IsSoundOn") == 1){
+            Sounds[7].GetComponent<AudioSource>().Play();
+        }
+    }
+
 }

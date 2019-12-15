@@ -64,7 +64,6 @@ public class GameManager : MonoBehaviour
         if(difficulty < 1){
             if(playerScore>=5000){
                 difficulty = 1;
-                Debug.Log("난이도UP1");
                 EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);       
                 difficultyUI.GetComponent<ChangeUIScript>().ChangeImage(difficulty);         
             }
@@ -73,7 +72,6 @@ public class GameManager : MonoBehaviour
             
             if(playerScore>=10000){
                 difficulty =2;
-                Debug.Log("난이도UP2");
                 EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);       
                 difficultyUI.GetComponent<ChangeUIScript>().ChangeImage(difficulty);
             }
@@ -82,7 +80,10 @@ public class GameManager : MonoBehaviour
         
         
     }
-
+    /////ㅊㅊㅊㅊ치트
+    public void AddcheatScore(){
+        AddScore(3000);
+    }
     public void AddPropertyCount(int type){
         coresPropertyCount[type] +=1;
         AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
@@ -100,7 +101,8 @@ public class GameManager : MonoBehaviour
             isBossFever=true;//보스 등장
             Debug.Log("보스 등장");
         }
-        if(isBossFever == true){
+        if(isBossFever == true){            
+            SoundManager.instance.BossAppearSound();
             EnemyManager.GetComponent<EnemyManager>().AppearBoss();
             isBossFever = false;
         }

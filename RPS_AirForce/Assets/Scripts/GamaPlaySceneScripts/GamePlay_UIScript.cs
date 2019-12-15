@@ -16,6 +16,7 @@ public class GamePlay_UIScript : MonoBehaviour
     public Button PauseButton;
     public GameObject PauseButtons;
     public GameObject[] SoundButtons;
+    public GameObject QuitUI;
     public GameObject SoundManager;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,8 @@ public class GamePlay_UIScript : MonoBehaviour
         Time.timeScale = 1;
         //gameOverUI.SetActive(false);
         GameOverUI.gameObject.SetActive(false);
-        
+        QuitUI.SetActive(false);
+
         if(PlayerPrefs.HasKey("BestScore") != false)
             BestScoreText.text = "" + PlayerPrefs.GetInt("BestScore");
             
@@ -48,6 +50,12 @@ public class GamePlay_UIScript : MonoBehaviour
             
         }
         playerScoreText.text = "" + GameManager.instance.playerScore;
+
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            Time.timeScale = 0;
+            //Pause();
+            QuitUI.SetActive(true);
+        }
     }
 
     public void RestartGame()
@@ -85,5 +93,14 @@ public class GamePlay_UIScript : MonoBehaviour
         SoundButtons[1].SetActive(true);     
         PlayerPrefs.SetInt("IsSoundOn", 1);   
         SoundManager.GetComponent<SoundManager>().OffSound();   
+    }
+     public void QuitYes(){
+        Application.Quit();
+    }
+    public void QuitNo(){
+        Time.timeScale = 1;
+        if(GameManager.instance.isPlayerDead != true)
+            Pause();
+        QuitUI.SetActive(false);
     }
 }

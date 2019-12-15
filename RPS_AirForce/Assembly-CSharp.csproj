@@ -55,13 +55,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ChangeUIScript.cs" />
      <Compile Include="Assets\Scripts\Core.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Bullet\BulletScript.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\Enemy.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyCore.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\EnemyShootBullet.cs" />
+     <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Enemys\MeteorScript.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\GamePlay_UIScript.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Item\ItemScript.cs" />
@@ -71,8 +71,10 @@
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\Player\swipe.cs" />
      <Compile Include="Assets\Scripts\GamaPlaySceneScripts\ShootBullet.cs" />
      <Compile Include="Assets\Scripts\MainMenuScripts\MainUIScript.cs" />
+     <Compile Include="Assets\Scripts\ScreenScript.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\UI\ButtonSprite.cs" />
+     <Compile Include="Assets\Scripts\UI\ChangeUIScript.cs" />
      <Compile Include="Assets\Scripts\UI\MoveMap.cs" />
      <Compile Include="Assets\Scripts\UI\StarScript.cs" />
  <Reference Include="Unity.Timeline.Editor">
