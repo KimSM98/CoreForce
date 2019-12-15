@@ -20,9 +20,12 @@ public class EnemyManager : MonoBehaviour
     
     #endregion
     #region Enemy_매번 변하는 값
-    public int[] EnemysProperties = new int[] { 2, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
-    int[,] Enemy1CoreNum= {{0,0,0,0}, {1,0,1,1}, {2,1,2,2}};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
-    float[] XposArr = { -1, 0.5f, 2, -0, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy의 x좌표
+    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+    //public int[] EnemysProperties = new int[] { 0, 0, 0 , 0, 0, 0 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+
+    int[] Enemy1CoreNum= {0,1,2};
+    //int[,] Enemy1CoreNum= {{0,0,0,0}, {1,0,1,1}, {2,1,2,2}};//0~2Enemy1이 가지고 있는 코어 개수, 스프라이트 바꿈
+    float[] XposArr = { -1, 1.75f, -0.3f, 1.2f, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy의 x좌표
     //-1, -0.3, 0.5 1.2 1.75 2.4
     #endregion
     
@@ -39,7 +42,6 @@ public class EnemyManager : MonoBehaviour
 
     //작업중
     int difficulty=0;
-
     private void Start()
     {
         //core개수 바꾸기
@@ -49,7 +51,8 @@ public class EnemyManager : MonoBehaviour
         SetEnemyShootTerm();
         BulletSpeed = Speed_Type0 * 1.5f;
 
-        
+        BossEnemy.GetComponent<EnemyShootBullet>().SetShootTerm(BossShootTerm);
+    
     }
     public float GetMoveSpeed(int objectType)
     {
@@ -115,8 +118,7 @@ public class EnemyManager : MonoBehaviour
         {
             Enemy1[i].GetComponent<EnemyShootBullet>().SetShootTerm(EnemyShootTerm);
         }
-        //보스작업중
-        BossEnemy.GetComponent<EnemyShootBullet>().SetShootTerm(BossShootTerm);
+        
     }
     
     void SetAllObjType()
@@ -133,13 +135,15 @@ public class EnemyManager : MonoBehaviour
     #region Enemy_매번 변하는 값의 함수
     public void SetObjType(GameObject Enemy){//EnemyType속성개수변경
         Enemy.GetComponent<EnemyCore>().OffCores();
-        Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[difficulty,coreNum]);
-        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[difficulty, coreNum]);
+        Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[difficulty]);
+        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[difficulty]);
+
+        /*Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[coreNum]);
+        Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[coreNum]);
 
         coreNum++;
-        //if (coreNum == Enemy1CoreNum.Length)
-        if (coreNum == 3)
-            coreNum = 0;
+        if(coreNum == Enemy1CoreNum.Length)
+            coreNum = 0;*/
     }
     //보스 작업중
     void SetBossData(){

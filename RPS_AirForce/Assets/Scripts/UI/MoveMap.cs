@@ -29,4 +29,8 @@ public class MoveMap : MonoBehaviour
         }
         this.transform.Translate(new Vector2(0, -Speed * Time.deltaTime));
     }
+
+    public void SetSpeed(int num){
+        Speed = num;
+    }
 }

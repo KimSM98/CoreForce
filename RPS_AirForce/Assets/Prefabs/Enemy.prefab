@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: -1000967237
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c887d539c2f9dde4abc1b46433a2fa86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edf755fe651964c4eb05976fd052a17c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,8 +116,8 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.29, y: -0.15}
-      - {x: -0.3, y: -0.15}
+    - - {x: 0.22, y: -0.15}
+      - {x: -0.23, y: -0.15}
       - {x: 0, y: 0.31}
 --- !u!114 &4928169226754964775
 MonoBehaviour:

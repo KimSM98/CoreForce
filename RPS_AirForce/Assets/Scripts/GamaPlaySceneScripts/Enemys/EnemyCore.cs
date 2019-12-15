@@ -36,14 +36,22 @@ public class EnemyCore : MonoBehaviour
     void SetCoreProperties(int coreNum){
         EnemyCoreProperty = new int[coreNum+1];
 
-        if(coreNum !=2){
+        /*if(coreNum !=2){
             for(int i=0; i < coreNum+1; i++){
-            EnemyCoreProperty[i] = GetComponentInParent<EnemyManager>().GetEnemyCoreProperty();
+                EnemyCoreProperty[i] = GetComponentInParent<EnemyManager>().GetEnemyCoreProperty();
+            }
+        }*/
+        if(coreNum == 0){
+            EnemyCoreProperty[0] = Random.Range(0,3);
+        }
+        else if(coreNum == 1){
+            for(int i=0; i < coreNum+1; i++){
+                EnemyCoreProperty[i] = GetComponentInParent<EnemyManager>().GetEnemyCoreProperty();
             }
         }
         else if(coreNum == 2){
             for(int i=0; i < coreNum+1; i++){
-            EnemyCoreProperty[i] = i;
+                EnemyCoreProperty[i] = i;
             }
         }
 

@@ -27,6 +27,7 @@ public class ButtonSprite : MonoBehaviour
             if(count == 4){
                 isButtonfever = true;
                 Player.GetComponent<PlayerShootBullet>().SetIsButtonFever(true, ButtonPrperty);
+                SoundManager.instance.ButtonFeverSound();
             } 
         }        
         

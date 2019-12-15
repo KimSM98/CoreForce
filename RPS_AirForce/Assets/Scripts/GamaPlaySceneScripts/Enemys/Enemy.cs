@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour
         //원래 있던 위치 받음
         xPos = this.transform.position.x;
         yPos = this.transform.position.y;
+
+        
     
     }
 
@@ -75,6 +77,7 @@ public class Enemy : MonoBehaviour
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
             this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
+            //Relocate();
             isEnemyLive = true;
         }
 
@@ -111,8 +114,8 @@ public class Enemy : MonoBehaviour
     void Relocate()
     {
             getX = GetComponentInParent<EnemyManager>().GetXPos();
-            this.transform.position = new Vector2(getX, 6f);//몬스터 스폰 텀을 넣고 싶으면 여기를 변경
-            
+            this.transform.position = new Vector2(getX, 5.2f);//몬스터 스폰 텀을 넣고 싶으면 여기를 변경
+            GetComponent<EnemyShootBullet>().ResetShootTerm();
     }
 
     void ChangeEnemySprite()

@@ -15,7 +15,8 @@ public class GamePlay_UIScript : MonoBehaviour
     public GameObject AttackButtons;
     public Button PauseButton;
     public GameObject PauseButtons;
-    public Button[] SoundButtons;
+    public GameObject[] SoundButtons;
+    public GameObject SoundManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,12 @@ public class GamePlay_UIScript : MonoBehaviour
         if(PlayerPrefs.HasKey("BestScore") != false)
             BestScoreText.text = "" + PlayerPrefs.GetInt("BestScore");
             
+        if(PlayerPrefs.GetInt("IsSoundOn") == 1){//Sound On
+            PressSoundOffButton();
+        }
+        else if (PlayerPrefs.GetInt("IsSoundOn") == 0){//SoundOff
+            PressSoundOnButton();
+        }
     }
 
     // Update is called once per frame
@@ -63,7 +70,20 @@ public class GamePlay_UIScript : MonoBehaviour
             
     }
 
-    public void SoundOnOff(){
-        
+    public void ReturnToMain(){
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenuScene");
+    }
+    public void PressSoundOffButton(){//        
+        SoundButtons[1].SetActive(false);
+        SoundButtons[0].SetActive(true);    
+        PlayerPrefs.SetInt("IsSoundOn", 0);
+        SoundManager.GetComponent<SoundManager>().OnSound();   
+    }
+    public void PressSoundOnButton(){        
+        SoundButtons[0].SetActive(false);
+        SoundButtons[1].SetActive(true);     
+        PlayerPrefs.SetInt("IsSoundOn", 1);   
+        SoundManager.GetComponent<SoundManager>().OffSound();   
     }
 }

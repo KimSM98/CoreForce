@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    public static BulletScript instance;
     public float BulletSpeed = 1f;
     public bool isMove = false;
 
@@ -19,6 +20,7 @@ public class BulletScript : MonoBehaviour
         //처음 위치
         Xpos = this.transform.position.x;
         Ypos = this.transform.position.y;
+        instance = this;
     }
 
     // Update is called once per frame
@@ -85,14 +87,17 @@ public class BulletScript : MonoBehaviour
                 if(coll.GetComponent<Enemy>().ObjectType == 1){
                     coll.GetComponent<Enemy>().SubBossHp();
                 }
-                GameManager.instance.playerScore += 100;
+                //GameManager.instance.playerScore += 100;
+                GameManager.instance.AddScore(100);
+                SoundManager.instance.EnemyDeadSound();
             }
 
         }
         if(this.CompareTag("EnemyBullet")){
             if(coll.CompareTag("Player")){
                 coll.gameObject.SetActive(false);                
-                GameManager.instance.isPlayerDead = true;//player죽음 
+                GameManager.instance.isPlayerDead = true;//player죽음
+                SoundManager.instance.PlayerDeadSound(); 
             }
         }
     }

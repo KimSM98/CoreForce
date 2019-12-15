@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int BossSpawnNum=4;
 //작업중
     public int difficulty = 0; //0:Easy 1: Medium 2: Hard
-
+    public GameObject difficultyUI;
 
     void Awake()
     {
@@ -49,8 +49,6 @@ public class GameManager : MonoBehaviour
             GetComponent<MainManager>().SaveScore(playerScore);
         }
 
-
-
     }
     void OffObject()
     {
@@ -59,26 +57,33 @@ public class GameManager : MonoBehaviour
             
     }
 
-    public void AddScore(int score, int coreType){
+    public void AddScore(int score){
         playerScore+=score;
-        AddPropertyCount(coreType);
+        //AddPropertyCount(coreType);
 
-        if(difficulty < 2){
-            if(playerScore >= 10000 ){
-                difficulty++;
-                EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);            
-            }
-            else if(playerScore>=5000){
-                difficulty++;
+        if(difficulty < 1){
+            if(playerScore>=5000){
+                difficulty = 1;
+                Debug.Log("난이도UP1");
                 EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);       
+                difficultyUI.GetComponent<ChangeUIScript>().ChangeImage(difficulty);         
             }
-            
-                       
         }
+        if(difficulty < 2){
+            
+            if(playerScore>=10000){
+                difficulty =2;
+                Debug.Log("난이도UP2");
+                EnemyManager.GetComponent<EnemyManager>().changeDifficulty(difficulty);       
+                difficultyUI.GetComponent<ChangeUIScript>().ChangeImage(difficulty);
+            }
+        }
+        
+        
         
     }
 
-    void AddPropertyCount(int type){
+    public void AddPropertyCount(int type){
         coresPropertyCount[type] +=1;
         AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
 

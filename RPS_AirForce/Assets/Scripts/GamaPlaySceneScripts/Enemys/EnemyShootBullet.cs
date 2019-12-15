@@ -9,7 +9,7 @@ public class EnemyShootBullet : MonoBehaviour
     float public_shootTerm;//외부에서 조절
 
     private bool isEnemyshoot = false;//이것을 사용해서 쏘고 안쏘게 함
-    private float shootTerm;//발사 텀
+    private float shootTerm = 0;//발사 텀
     int type;
 
     void Start()
@@ -22,7 +22,6 @@ public class EnemyShootBullet : MonoBehaviour
         //수정 예정
         if (this.gameObject.tag == "Enemy")
         {
-
             if (isEnemyshoot == true)
             {
                 EnemyShoot();//발사
@@ -77,9 +76,13 @@ public class EnemyShootBullet : MonoBehaviour
     public void SetShootTerm(float term)
     {
         public_shootTerm = term;
-        shootTerm = public_shootTerm;
+        if(shootTerm == 0)
+            shootTerm = public_shootTerm;//발사
     }
 
+    public void ResetShootTerm(){
+        shootTerm = public_shootTerm;
+    }
    /* IEnumerator EnemyShooting()
     {
         isEnemyshoot = true;

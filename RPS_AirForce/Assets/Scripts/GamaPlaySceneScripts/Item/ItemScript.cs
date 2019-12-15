@@ -46,8 +46,9 @@ public class ItemScript : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D coll){
         if(coll.CompareTag("Player")){            
-            GameManager.instance.AddScore(Score, GetComponent<ObjectTypeScript>().GetObjType());
-            
+            GameManager.instance.AddScore(Score);
+            GameManager.instance.AddPropertyCount(GetComponent<ObjectTypeScript>().GetObjType());
+            SoundManager.instance.PickUpCoreSound();
             Relocate();
 
         }

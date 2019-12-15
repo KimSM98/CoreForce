@@ -24,4 +24,5 @@ public class ObjectTypeScript : MonoBehaviour
         return Type;
     }
 
+
 }
