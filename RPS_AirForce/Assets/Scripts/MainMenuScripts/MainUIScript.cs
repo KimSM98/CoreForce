@@ -18,6 +18,7 @@ public class MainUIScript : MonoBehaviour
     bool isPlayerMove = false;
     void Start()
     {
+        //PlayerPrefs.SetInt("BestScore", 0);//초기화할때 사용
         BestScore.text = "" + PlayerPrefs.GetInt("BestScore");
         if(PlayerPrefs.GetInt("IsSoundOn") == 1){//Sound On
            PressSoundOffButton();
@@ -32,7 +33,7 @@ public class MainUIScript : MonoBehaviour
     void Update()
     {
         if(isPlayerMove == true){
-            PlayerIcon.transform.Translate(new Vector3(0,0.1f,0));
+            PlayerIcon.transform.Translate(new Vector3(0,0.2f,0));
             if(PlayerIcon.transform.position.y > 5.25f){
                 SceneManager.LoadScene("GamePlayScene");
                 isPlayerMove=false;

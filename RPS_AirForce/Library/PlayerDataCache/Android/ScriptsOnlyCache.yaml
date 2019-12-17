@@ -100,25 +100,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9786}
     - Class: 114
-      Script: {instanceID: 9826}
+      Script: {instanceID: 9822}
     - Class: 114
-      Script: {instanceID: 9882}
+      Script: {instanceID: 9828}
     - Class: 114
-      Script: {instanceID: 9996}
+      Script: {instanceID: 9884}
     - Class: 114
-      Script: {instanceID: 10038}
+      Script: {instanceID: 9998}
     - Class: 114
-      Script: {instanceID: 10134}
+      Script: {instanceID: 10040}
     - Class: 114
-      Script: {instanceID: 10218}
+      Script: {instanceID: 10136}
     - Class: 114
-      Script: {instanceID: 10344}
+      Script: {instanceID: 10220}
     - Class: 114
-      Script: {instanceID: 10446}
+      Script: {instanceID: 10346}
     - Class: 114
-      Script: {instanceID: 10562}
+      Script: {instanceID: 10448}
     - Class: 114
-      Script: {instanceID: 88030}
+      Script: {instanceID: 10564}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -179,9 +179,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9706}
     - Class: 114
-      Script: {instanceID: 9826}
+      Script: {instanceID: 9828}
     - Class: 114
-      Script: {instanceID: 10446}
+      Script: {instanceID: 10448}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -741,6 +741,12 @@ ScriptsOnlyBuild:
     className: MainManager
   - hash:
       serializedVersion: 2
+      Hash: 6c0200ee800d5d71df0542b5ece08546
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MeteorScript
+  - hash:
+      serializedVersion: 2
       Hash: 8081af2a7004acc80c059683d6228160
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -789,7 +795,7 @@ ScriptsOnlyBuild:
     className: ChangeUIScript
   - hash:
       serializedVersion: 2
-      Hash: 41c7ecc798d5e434d5deb436408320eb
+      Hash: b54cab490e6d3dacedb30b42473f765c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -961,12 +967,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 6c0200ee800d5d71df0542b5ece08546
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MeteorScript
   platform: 13
   scenePathNames:
   - Assets/Scenes/MainMenuScene.unity

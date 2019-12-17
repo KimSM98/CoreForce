@@ -87,6 +87,8 @@ public class BulletScript : MonoBehaviour
                 if(coll.GetComponent<Enemy>().ObjectType == 1){
                     coll.GetComponent<Enemy>().SubBossHp();
                 }
+
+                //if(coll.GetComponent<Enemy>().)
                 //GameManager.instance.playerScore += 100;
                 GameManager.instance.AddScore(100);
                 SoundManager.instance.EnemyDeadSound();

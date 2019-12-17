@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 //작업중
     public int difficulty = 0; //0:Easy 1: Medium 2: Hard
     public GameObject difficultyUI;
-
+    public bool isbossSoundPlayed = false;
     void Awake()
     {
         Debug.Log("저장"+ PlayerPrefs.HasKey("BestScore") + PlayerPrefs.GetInt("BestScore"));
@@ -101,8 +101,12 @@ public class GameManager : MonoBehaviour
             isBossFever=true;//보스 등장
             Debug.Log("보스 등장");
         }
+        
         if(isBossFever == true){            
-            SoundManager.instance.BossAppearSound();
+            if(isbossSoundPlayed == false){
+                SoundManager.instance.BossAppearSound();
+                isbossSoundPlayed = true;
+            }                
             EnemyManager.GetComponent<EnemyManager>().AppearBoss();
             isBossFever = false;
         }

@@ -178,6 +178,7 @@ public class EnemyManager : MonoBehaviour
 
     public void AppearBoss(){
         BossEnemy.gameObject.SetActive(true);
+        //SoundManager.instance.BossAppearSound();
     }
     
     #endregion

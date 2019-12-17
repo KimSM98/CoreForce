@@ -73,6 +73,8 @@ public class Enemy : MonoBehaviour
 
         if (isEnemyLive == false)//Enemy죽음
         {
+            if(this.ObjectType == 1)
+                GameManager.instance.isbossSoundPlayed = false;
             PlayParticle();
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
@@ -161,5 +163,9 @@ public class Enemy : MonoBehaviour
     void PlayParticle(){
         ExplosionParticle.transform.position = this.transform.position;
         ExplosionParticle.GetComponent<ParticleSystem>().Play();
+    }
+
+    public int GetEnemyObjectType(){
+        return ObjectType;
     }
 }
