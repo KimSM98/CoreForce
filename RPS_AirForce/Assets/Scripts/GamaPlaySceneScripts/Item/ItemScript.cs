@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//코어를 먹으면 보스 등장, 버튼 피버 게이지 증가, 스코어 증가
 public class ItemScript : MonoBehaviour
 {
     public int Score;
     public float CoreDropSpeed = 3f;
-
-    public bool isMove = false;//Enemy가 죽었으면 True
+    public bool isMove = false;
 
     float Xpos;
     float Ypos;
@@ -16,7 +14,6 @@ public class ItemScript : MonoBehaviour
     float temp;
     Vector3 cameraView;
 
-    // Start is called before the first frame update
     void Start()
     {
         Xpos = this.transform.position.x;
@@ -24,7 +21,6 @@ public class ItemScript : MonoBehaviour
         temp = spinSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         cameraView = Camera.main.WorldToViewportPoint(transform.position);
@@ -33,17 +29,13 @@ public class ItemScript : MonoBehaviour
         {        
             if (cameraView.y < -0.3f){                
                 Relocate();
-            }//Time.deltaTime
+            }
             this.transform.Translate(new Vector2(0, -CoreDropSpeed *Time.deltaTime));
             SpinItem();
-        }
-        //임시
-        /*if(Time.deltaTime == 0)
-            spinSpeed = 0;
-        else if(Time.deltaTime!=0)
-            spinSpeed = temp;*/
+        }      
 
     }
+    
     void OnTriggerEnter2D(Collider2D coll){
         if(coll.CompareTag("Player")){            
             GameManager.instance.AddScore(Score);

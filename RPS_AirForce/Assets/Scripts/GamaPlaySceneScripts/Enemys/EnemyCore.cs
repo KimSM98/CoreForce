@@ -5,21 +5,16 @@ using UnityEngine;
 public class EnemyCore : MonoBehaviour
 {
     public GameObject[] EnemyCores;
-    //int[] EnemyCoreProperty = {0,0,0};
     int[] EnemyCoreProperty;
     int random;
     int coreType;
-    void Start()
-    {
-        //OffCores();
-    }
     
-    public void OffCores(){//Enemy의 속성 개수가 바뀌면 끔
+    public void OffCores(){
         for(int i=0; i < EnemyCores.Length; i++){
             EnemyCores[i].SetActive(false);
         }
     }
-    public void SetActiveCorePos(int coreNum)//추후에 이름 바꿀 것//Enemy 속성 개수
+    public void SetActiveCorePos(int coreNum)
     {
         SetCoreProperties(coreNum);
         coreType=0;
@@ -36,11 +31,6 @@ public class EnemyCore : MonoBehaviour
     void SetCoreProperties(int coreNum){
         EnemyCoreProperty = new int[coreNum+1];
 
-        /*if(coreNum !=2){
-            for(int i=0; i < coreNum+1; i++){
-                EnemyCoreProperty[i] = GetComponentInParent<EnemyManager>().GetEnemyCoreProperty();
-            }
-        }*/
         if(coreNum == 0){
             EnemyCoreProperty[0] = Random.Range(0,3);
         }

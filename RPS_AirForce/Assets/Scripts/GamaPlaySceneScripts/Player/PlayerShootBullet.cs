@@ -5,24 +5,36 @@ using UnityEngine.UI;
 public class PlayerShootBullet : MonoBehaviour
 {
     public GameObject[] Bullets;
-    public GameObject shootPos;//bullet발사 위치
+    public GameObject shootPos;
     public GameObject PlayerCore;
     public GameObject[] Buttons;
+    public GameObject[] ButtonFeverParticles;
+
+    bool[] IsButtonFeverOn;
+    bool[] feverTimeDuration;  
     int bulletNum = 0;
-    //작업중
-    public bool[] IsButtonFeverOn;
-    bool[] feverTimeDuration;
-    public GameObject[] particles;
+
     void Start()
     {
         IsButtonFeverOn = new bool[3]{false, false, false};
         feverTimeDuration = new bool[3]{false,false,false};
-        for(int i = 0; i< particles.Length; i++){
-            particles[i].GetComponent<ParticleSystem>().Stop();
+        for(int i = 0; i< ButtonFeverParticles.Length; i++){
+            ButtonFeverParticles[i].GetComponent<ParticleSystem>().Stop();
         }
     }
 
-    void ShootBullet()//일반 공격
+    void Update()
+    {
+        //keyboard input
+        if(Input.GetKeyDown(KeyCode.A))
+            ButtonShoot(0);
+        if(Input.GetKeyDown(KeyCode.S))
+            ButtonShoot(1);
+        if(Input.GetKeyDown(KeyCode.D))
+            ButtonShoot(2);   
+    }
+
+    void ShootBullet()
     {
         Bullets[bulletNum].GetComponent<ObjectTypeScript>().ChangeSprite();
         Bullets[bulletNum].transform.position = new Vector2(shootPos.transform.position.x, shootPos.transform.position.y);
@@ -37,7 +49,7 @@ public class PlayerShootBullet : MonoBehaviour
     void ShootSkill(int type){
         float skillShooPos = shootPos.transform.position.x -0.6f;
 
-            for(int i=0; i<3; i++){
+            for(int i=0; i<3; i++){ //Shoot triple bullet
                 Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = type;
                 Bullets[bulletNum].GetComponent<ObjectTypeScript>().ChangeSprite();
                 Bullets[bulletNum].transform.position = new Vector2(skillShooPos + 0.6f*i , shootPos.transform.position.y);
@@ -50,88 +62,50 @@ public class PlayerShootBullet : MonoBehaviour
     }
 
 #region 미사일 발사 함수
-    void ShootFire()
+
+    public void ButtonShoot(int num)
     {
-        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 0;
+        SoundManager.instance.ShootBulletSound();
+        if(Time.deltaTime != 0){
+           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(num);
+        
+            if(IsButtonFeverOn[num] == false){
+                if(feverTimeDuration[num] == false){
+                    Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = num;
+                    ShootBullet();
+                }
+                else if(feverTimeDuration[num]==true)
+                    ShootSkill(num);
+                
+            }
+                
+            else if(IsButtonFeverOn[num] == true){
+                StartCoroutine(SkillCoroutine(num));
+            } 
+        }
+    }
+    //for Android - button attack
+    public void ShootFire()
+    {
+        ButtonShoot(0);
     }
 
-    void ShootGrass()
+    public void ShootGrass()
     {
-        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 1;
+        ButtonShoot(1);
     }
 
-    void ShootWater()
+    public void ShootWater()
     {
-        Bullets[bulletNum].GetComponent<ObjectTypeScript>().Type = 2;
+        ButtonShoot(2);
     }
+    
 #endregion
 
-    public void Button0Shoot()
-    {
-        if(Time.deltaTime != 0){
-           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(0);
-        
-            if(IsButtonFeverOn[0] == false){
-                if(feverTimeDuration[0] == false){
-                    ShootFire();
-                    ShootBullet();
-                }
-                else if(feverTimeDuration[0]==true)
-                    ShootSkill(0);
-                
-            }
-                
-            else if(IsButtonFeverOn[0] == true){
-                StartCoroutine(SkillCoroutine(0));
-            } 
-        }
-        
-            
-    }
-    public void Button1Shoot()
-    {
-        if(Time.deltaTime != 0){
-           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(1);        
-        
-            if(IsButtonFeverOn[1] == false){
-                if(feverTimeDuration[1] == false){
-                    ShootGrass();
-                    ShootBullet();
-                }
-                else if(feverTimeDuration[1]==true)
-                    ShootSkill(1);
-                
-            }
-                
-            else if(IsButtonFeverOn[1] == true){
-                StartCoroutine(SkillCoroutine(1));
-            } 
-        }
-        
-    }
-    public void Button2Shoot()
-    {
-        if(Time.deltaTime != 0){
-           PlayerCore.GetComponent<ObjectTypeScript>().Changetype(2);
-
-            if(IsButtonFeverOn[2] == false){
-                if(feverTimeDuration[2] == false){
-                    ShootWater();
-                    ShootBullet();
-                }
-                else if(feverTimeDuration[2]==true)
-                    ShootSkill(2);
-            }
-            
-            else if(IsButtonFeverOn[2] == true){
-                StartCoroutine(SkillCoroutine(2));
-            } 
-        }
-        
-    }
     public void SetIsButtonFever(bool answer, int BP){
         IsButtonFeverOn[BP] = answer;
     }
+    
     IEnumerator SkillCoroutine(int type){
         IsButtonFeverOn[type] = false;
         feverTimeDuration[type] = true;
@@ -155,8 +129,8 @@ public class PlayerShootBullet : MonoBehaviour
 
     void StartParticle(bool isStart, int type){
         if(isStart == true)
-            particles[type].GetComponent<ParticleSystem>().Play();
+            ButtonFeverParticles[type].GetComponent<ParticleSystem>().Play();
         else if(isStart == false)
-            particles[type].GetComponent<ParticleSystem>().Stop();
+            ButtonFeverParticles[type].GetComponent<ParticleSystem>().Stop();
     }
 }

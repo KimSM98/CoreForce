@@ -5,28 +5,29 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
-    #region 설정
-    public float Speed_Type0 = 1;//일반 몹
-    public float Speed_Type1 = 0;//보스 몹
-    public float Speed_Type2 = 1.5f;//장애물
+
+    #region 설정Setting    
+    public float[] Speed = new float[3]{2.5f, 0, 1.5f};    
     public float BulletSpeed = 0.5f;
     public float EnemyShootTerm = 1f;   // 1, 0.75, 0.5 
     public float BossShootTerm = 0.75f;
     public float AppearMeteorTerm = 10f;
     #endregion
+
     #region GameObject
     public GameObject BossEnemy;
     public GameObject[] Enemy1;
     public GameObject[] Meteors;
     public GameObject[] EnemyBullets;
-    public GameObject[] Cores;//Enemy의 드롭 아이템
-    
+    public GameObject[] Cores;//Enemy's Core Item
+    public GameObject[] BossSkillBullet;
     #endregion
+
     #region Enemy_매번 변하는 값
-    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//불, 풀, 물 속성/ 코어의 스프라이트 바꿈
+    public int[] EnemysProperties = new int[] { 0, 1, 2 , 1, 0, 2 };//0: fire, 1: Grass, 2: Water 
   
     int[] Enemy1CoreNum= {0,1,2};
-    float[] XposArr = { -1, 1.75f, -0.3f, 1.2f, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy의 x좌표
+    float[] XposArr = { -1, 1.75f, -0.3f, 1.2f, -1, 2, 0.3f, 1.2f, 2.4f };//Enemy's xPos
     //-1, -0.3, 0.5 1.2 1.75 2.4
     float[] MeteorsXpos = {-1.1f, 2.0f, 0, 1.5f};
     int meteorPosNum = 0;
@@ -35,40 +36,30 @@ public class EnemyManager : MonoBehaviour
     int coreNum=0;
     int iBullet = 0;
     int sBullet =0;
-    int dropCoreNum=0;//드롭할 코어의 i
+    int dropCoreNum=0;
     int corePropertyNum=-1;
     int iX = 0;
     float moveSpeed;
     float xPos = 0;
     GameObject core;
-    public GameObject[] SkillBullet;
-
-    //작업중
     int difficulty=0;
+    
     private void Start()
     {
         instance = this;
 
-        //core개수 바꾸기
         BossEnemy.SetActive(false);
         SetAllObjType();
         SetBulletSpeed();
         SetEnemyShootTerm();
-        BulletSpeed = Speed_Type0 * 1.5f;
-
+        
+        BulletSpeed = Speed[0] * 1.5f;
         BossEnemy.GetComponent<EnemyShootBullet>().SetShootTerm(BossShootTerm);
     
     }
     public float GetMoveSpeed(int objectType)
-    {
-        if (objectType == 0)//일반몹
-            moveSpeed = Speed_Type0;
-        else if (objectType == 1)//보스몹
-            moveSpeed = Speed_Type1;
-        else if (objectType == 2)//장애물
-            moveSpeed = Speed_Type2;
-
-        return moveSpeed;
+    {   
+        return Speed[objectType];        
     }
 
     public float GetXPos()
@@ -92,22 +83,21 @@ public class EnemyManager : MonoBehaviour
         iBullet++;
         if (iBullet == EnemyBullets.Length)
             iBullet = 0;
-        //여기에 Bullet의 속성
+            
         EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().Changetype(type);
-        //EnemyBullets[iBullet].GetComponent<ObjectTypeScript>().ChangeSprite();
         EnemyBullets[iBullet].GetComponent<BulletScript>().isMove = true;
 
         return EnemyBullets[iBullet];
     }
 
-    public GameObject GetSkillBullet(int type){
+    public GameObject GetBossSkillBullet(int type){
         sBullet++;
-        if (sBullet == SkillBullet.Length)
+        if (sBullet == BossSkillBullet.Length)
             sBullet = 0;
-        SkillBullet[sBullet].GetComponent<ObjectTypeScript>().Changetype(type);
-        SkillBullet[sBullet].GetComponent<BulletScript>().isMove = true;
+        BossSkillBullet[sBullet].GetComponent<ObjectTypeScript>().Changetype(type);
+        BossSkillBullet[sBullet].GetComponent<BulletScript>().isMove = true;
 
-        return SkillBullet[sBullet];
+        return BossSkillBullet[sBullet];
     }
 
     void SetBulletSpeed()
@@ -117,7 +107,7 @@ public class EnemyManager : MonoBehaviour
             EnemyBullets[i].GetComponent<BulletScript>().SetBulletSpeed(BulletSpeed);
         }
     }
-    void SetEnemyShootTerm()//난이도 바뀌면 바뀜
+    void SetEnemyShootTerm()
     {
         for (int i = 0; i < Enemy1.Length; i++)
         {
@@ -128,7 +118,7 @@ public class EnemyManager : MonoBehaviour
     
     void SetAllObjType()
     {
-        if (Enemy1.Length > 0)//예외처리
+        if (Enemy1.Length > 0)
         {
             for (int i = 0; i < Enemy1.Length; i++)
             {
@@ -138,28 +128,33 @@ public class EnemyManager : MonoBehaviour
         SetBossData();
     }
     #region Enemy_매번 변하는 값의 함수
-    public void SetObjType(GameObject Enemy){//EnemyType속성개수변경
+    public void SetObjType(GameObject Enemy){
         Enemy.GetComponent<EnemyCore>().OffCores();
         Enemy.GetComponent<Enemy>().SettingObj(0, Enemy1CoreNum[difficulty]);
         Enemy.GetComponent<EnemyCore>().SetActiveCorePos(Enemy1CoreNum[difficulty]);
 
     }
-    //보스 작업중
+
     void SetBossData(){
         BossEnemy.GetComponent<Enemy>().SettingObj(1, 2);
         BossEnemy.GetComponent<EnemyCore>().SetActiveCorePos(2);
     }
+
     public void DropCores(Vector3 EnemyPos, int coreNum, int[] cores){
         for(int i=0; i < coreNum+1; i++){            
             GetCoreObj();
             core.GetComponent<ObjectTypeScript>().Changetype(cores[i]);
-            core.transform.position = new Vector3(EnemyPos.x, EnemyPos.y+ i*0.4f);
-            //core.transform.position = EnemyPos;
+            
+            float rand = Random.Range(-0.25f,0.25f);
+            if(i==0)
+                core.transform.position = new Vector3(EnemyPos.x, EnemyPos.y);
+            else
+                core.transform.position = new Vector3(EnemyPos.x+rand, EnemyPos.y+rand);
             core.GetComponent<ItemScript>().isMove = true;
         }       
     }
     
-    public int GetEnemyCoreProperty(){//접근        //나중에 위에 변수에 -1이라고 한것 고치기
+    public int GetEnemyCoreProperty(){
         corePropertyNum++;
 
         if(corePropertyNum == EnemysProperties.Length)
@@ -178,7 +173,6 @@ public class EnemyManager : MonoBehaviour
 
     public void AppearBoss(){
         BossEnemy.gameObject.SetActive(true);
-        //SoundManager.instance.BossAppearSound();
     }
     
     #endregion
@@ -193,19 +187,16 @@ public class EnemyManager : MonoBehaviour
             
         else if(difficulty ==2){
             EnemyShootTerm = 0.75f;
-            //Meteors[0].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
             Meteors[1].SetActive(true);
             Meteors[1].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
             Meteors[2].SetActive(true);
             Meteors[2].GetComponent<MeteorScript>().AppearMeteror(AppearMeteorTerm);
         
-        }
-            
+        }          
             
         SetEnemyShootTerm();
     }
 
-    //작업중
     public float GetMeteorPos(){
         int num = meteorPosNum;
         meteorPosNum++;

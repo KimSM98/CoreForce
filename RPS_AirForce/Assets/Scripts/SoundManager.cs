@@ -8,11 +8,6 @@ public class SoundManager : MonoBehaviour
     public GameObject[] Sounds;
     public GameObject Background;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        Debug.Log("사운드" + PlayerPrefs.GetInt("IsSoundOn"));
-    }
    void Start()
     {
         if(PlayerPrefs.GetInt("IsSoundOn") == 1)
@@ -20,24 +15,20 @@ public class SoundManager : MonoBehaviour
         instance=this;
     }
 
-    // Update is called once per frame
-    public void OnSound(){//사운드 켬
+    public void OnSound(){
         PlayerPrefs.SetInt("IsSoundOn", 1);
         Background.GetComponent<AudioSource>().Play();
-        //SoundManager.SetActive(true);
     }
-    public void OffSound(){//사운드 끔
+    public void OffSound(){
         PlayerPrefs.SetInt("IsSoundOn", 0);
         Background.GetComponent<AudioSource>().Stop();
-        //SoundManager.SetActive(false);
     }
-    public void ClickSound(){
-        
+    public void ClickSound(){        
         if(PlayerPrefs.GetInt("IsSoundOn") == 1)
             Sounds[0].GetComponent<AudioSource>().Play();
     }
 
-    public void AttackSound(){
+    public void ShootBulletSound(){
         if(PlayerPrefs.GetInt("IsSoundOn") == 1)
             Sounds[1].GetComponent<AudioSource>().Play();
     }

@@ -17,36 +17,35 @@ public class BulletScript : MonoBehaviour
 
     void Start()
     {        
-        //처음 위치
+        
         Xpos = this.transform.position.x;
         Ypos = this.transform.position.y;
         instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.isPlayerDead == true)//Gameover상황이면
+        if (GameManager.instance.isPlayerDead == true)//Gameover Situation
         {
-            if (this.CompareTag("EnemyBullet") == true)//EnemyBullet이 안보이게
+            if (this.CompareTag("EnemyBullet") == true)
             {
-                this.gameObject.SetActive(false);//끔
+                this.gameObject.SetActive(false);
             }
         }
 
         cameraView = Camera.main.WorldToViewportPoint(transform.position);
         
-        if(this.gameObject.tag == "EnemyBullet")//Enemy불렛일때
+        if(this.gameObject.tag == "EnemyBullet")
         {
-            if (cameraView.y < 0f)//카메라 밖에 나가면, 움직임을 멈추고 원래 있던 자리로
+            if (cameraView.y < 0f)
             {
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
             }
         }
-        else//Player불렛일때
+        else
         {     
-            if (cameraView.y > 0.95f)//카메라 밖에 나가면, 움직임을 멈추고 원래 있던 자리로
+            if (cameraView.y > 0.95f)
             {
                 isMove = false;
                 this.transform.position = new Vector2(Xpos, Ypos);
@@ -88,8 +87,6 @@ public class BulletScript : MonoBehaviour
                     coll.GetComponent<Enemy>().SubBossHp();
                 }
 
-                //if(coll.GetComponent<Enemy>().)
-                //GameManager.instance.playerScore += 100;
                 GameManager.instance.AddScore(100);
                 SoundManager.instance.EnemyDeadSound();
             }
@@ -98,15 +95,14 @@ public class BulletScript : MonoBehaviour
         if(this.CompareTag("EnemyBullet")){
             if(coll.CompareTag("Player")){
                 coll.gameObject.SetActive(false);                
-                GameManager.instance.isPlayerDead = true;//player죽음
+                GameManager.instance.isPlayerDead = true;
                 SoundManager.instance.PlayerDeadSound(); 
             }
         }
     }
 
-    bool IsWin(int thisType, int collType)//상성 체크
+    bool IsWin(int thisType, int collType)
     {
-        //이김
         if (thisType == 0 && collType == 1 || thisType == 1 && collType == 2 || thisType == 2 && collType == 0)
         {
             return true;

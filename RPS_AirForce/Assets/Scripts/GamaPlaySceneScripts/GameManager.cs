@@ -10,37 +10,33 @@ public class GameManager : MonoBehaviour
     public GameObject EnemyManager;
     public GameObject[] OffObjects;
 
-    public bool isPlayerDead = false;//플레이어가 살아있는지의 여부
+    public bool isPlayerDead = false;
     public int playerScore = 0;
     public int PlayerBestScore=0;
-    public bool isMoveOn = true;//움직이는 상황인지 체크
+    public bool isMoveOn = true;
     
     int[] coresPropertyCount = {0,0,0};
     public GameObject[] AttackButtons;
-    public bool isBossFever = false;//보스 등장 여부
+    public bool isBossFever = false;
     public Image[] BossUI;
     public int BossSpawnNum=4;
-//작업중
     public int difficulty = 0; //0:Easy 1: Medium 2: Hard
     public GameObject difficultyUI;
     public bool isbossSoundPlayed = false;
-    void Awake()
-    {
-        Debug.Log("저장"+ PlayerPrefs.HasKey("BestScore") + PlayerPrefs.GetInt("BestScore"));
-        instance = this;
+    
+    void Awake() {
+        GameManager.instance = this;
     }
-
     void Start()
     {
-        isPlayerDead = false;//게임이 시작될때 초기화        
-        isMoveOn = true;//시작할때는 움직임ON
+        isPlayerDead = false;     
+        isMoveOn = true;
         for(int i=0; i<3; i++){
             BossUI[i].gameObject.SetActive(false);
         }
         playerScore = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isPlayerDead == true)
@@ -59,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int score){
         playerScore+=score;
-        //AddPropertyCount(coreType);
+
 
         if(difficulty < 1){
             if(playerScore>=5000){
@@ -80,13 +76,14 @@ public class GameManager : MonoBehaviour
         
         
     }
-    /////ㅊㅊㅊㅊ치트
-    public void AddcheatScore(){
+    
+    public void AddcheatScore(){//Cheat
         AddScore(3000);
     }
+
     public void AddPropertyCount(int type){
         coresPropertyCount[type] +=1;
-        AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);//속성별 카운트를 넣어줌
+        AttackButtons[type].GetComponent<ButtonSprite>().NextSprite(coresPropertyCount[type]);
 
         if(coresPropertyCount[0] >= BossSpawnNum){
             BossUI[0].gameObject.SetActive(true);
@@ -98,7 +95,7 @@ public class GameManager : MonoBehaviour
             BossUI[2].gameObject.SetActive(true);
         }
         if(coresPropertyCount[0] >= BossSpawnNum && coresPropertyCount[1] >= BossSpawnNum && coresPropertyCount[2] >= BossSpawnNum){
-            isBossFever=true;//보스 등장
+            isBossFever=true;
             Debug.Log("보스 등장");
         }
         
@@ -110,12 +107,9 @@ public class GameManager : MonoBehaviour
             EnemyManager.GetComponent<EnemyManager>().AppearBoss();
             isBossFever = false;
         }
-            
-        
-        //Debug.Log("Core: " + coresPropertyCount[0] + " " + coresPropertyCount[1] + " " +coresPropertyCount[2]);
     }
 
-    public void ResetPropertyCount()//보스 잡으면 초기화
+    public void ResetPropertyCount()
     {
         for(int i=0; i<3; i++){
             coresPropertyCount[i] = 0;

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GamePlay_UIScript : MonoBehaviour
 {
-    //public GameObject gameOverUI;
     public Canvas GameUICanvas;
     public Text playerScoreText;
     public Text BestScoreText;
@@ -18,11 +17,10 @@ public class GamePlay_UIScript : MonoBehaviour
     public GameObject[] SoundButtons;
     public GameObject QuitUI;
     public GameObject SoundManager;
-    // Start is called before the first frame update
+
     void Start()
     {
         Time.timeScale = 1;
-        //gameOverUI.SetActive(false);
         GameOverUI.gameObject.SetActive(false);
         QuitUI.SetActive(false);
 
@@ -37,10 +35,9 @@ public class GamePlay_UIScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.isPlayerDead == true)//GameOver상황
+        if (GameManager.instance.isPlayerDead == true)
         {
             GameUICanvas.gameObject.SetActive(false);
             

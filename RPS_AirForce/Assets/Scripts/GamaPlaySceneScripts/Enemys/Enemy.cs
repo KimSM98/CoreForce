@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int ObjectType = 0;//0: 일반, 1: 보스, 2: 장애물
-    public float moveSpeed = 1;
-    public bool isEnemyLive = true;//Enemy가 살아있는지의 여부, 이름 수정할 예정
-    //public bool isMoveOn = true;//움직이는 상황인지 체크
-
-    private float xPos, yPos;
-
-    private float objectSpeed;//object마다 public으로 다른 스피드를 갖고 있기 때문에
-
-    float getX;
-
-    Vector3 cameraView;
+    public int ObjectType = 0;//0: normal Enemy, 1: Boss
     public int coreNum;
+    public float moveSpeed = 1f;
+    public bool isEnemyLive = true;
+    
+    private float xPos, yPos;
+    private float objectSpeed;
+    float getX;
+    Vector3 cameraView;
+    
     #region Boss
     public int hp=30;
     int hpT=0;
@@ -26,68 +23,55 @@ public class Enemy : MonoBehaviour
 
     public GameObject ExplosionParticle;
 
-    void Awake()
-    {
-        moveSpeed = GetComponentInParent<EnemyManager>().GetMoveSpeed(ObjectType);
-        //ObjectType = GetComponentInParent<EnemyManager>().
-        
-    }
-
     void Start()
     {
+        moveSpeed = GetComponentInParent<EnemyManager>().GetMoveSpeed(ObjectType);
+        
         if(ObjectType==1)
             hpT=hp;
-        //ChangeEnemySprite();        
-        objectSpeed = moveSpeed;//isMoveOn이 false에서 true로 바뀔때 원래의 속도를 받기위한 저장 변수
+         
+        objectSpeed = moveSpeed;
 
-        //원래 있던 위치 받음
         xPos = this.transform.position.x;
         yPos = this.transform.position.y;
-
-        
-    
     }
 
-    // Update is called once per frame
     void Update()
     {
         cameraView = Camera.main.WorldToViewportPoint(transform.position);
 
-        if (GameManager.instance.isMoveOn == false)//움직이는 상황이 아닐경우 움직이지 않게 speed를 0으로 바꿈
+        if (GameManager.instance.isMoveOn == false)
         {
             moveSpeed = 0;
         }
         else
             moveSpeed = objectSpeed;
 
-        if(GameManager.instance.isPlayerDead == true)//Gameover상황이면
+        if(GameManager.instance.isPlayerDead == true)
         {
-            if(this.CompareTag("Enemy") == true)//Enemy가 안보이게
+            if(this.CompareTag("Enemy") == true)
             {
-                this.gameObject.SetActive(false);//끔
+                this.gameObject.SetActive(false);
             }
         }
         
-        //GameObject가 계속 아래로 내려가게 
         this.transform.Translate(new Vector2(0, moveSpeed * Time.deltaTime));
 
-        if (isEnemyLive == false)//Enemy죽음
+        if (isEnemyLive == false)
         {
             if(this.ObjectType == 1)
                 GameManager.instance.isbossSoundPlayed = false;
             PlayParticle();
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
 
-            this.transform.position = new Vector2(0, -6f);//카메라 밖으로 나가게해서 Relocation
-            //Relocate();
+            this.transform.position = new Vector2(0, -6f);//Relocation
             isEnemyLive = true;
         }
 
-        if (cameraView.y < -0.3f)//카메라 아래로 내려가면
-        {//카메라 아래로 나가면, x좌표 이동, y좌표를 위로 이동    
-            Relocate();
-            //리셋
-            GetComponentInParent<EnemyManager>().SetObjType(this.gameObject);//죽었을때와도 같은 상황
+        if (cameraView.y < -0.3f)
+        {
+            Relocate();            
+            GetComponentInParent<EnemyManager>().SetObjType(this.gameObject);
         }
 
         if(ObjectType == 1){
@@ -116,7 +100,7 @@ public class Enemy : MonoBehaviour
     void Relocate()
     {
             getX = GetComponentInParent<EnemyManager>().GetXPos();
-            this.transform.position = new Vector2(getX, 5.2f);//몬스터 스폰 텀을 넣고 싶으면 여기를 변경
+            this.transform.position = new Vector2(getX, 5.2f);
             GetComponent<EnemyShootBullet>().ResetShootTerm();
     }
 
@@ -126,7 +110,7 @@ public class Enemy : MonoBehaviour
         this.GetComponent<ObjectTypeScript>().ChangeSprite();
     }
 
-    public void SettingObj(int ObjType, int core_Num)//Enemy1(일반몬스터), 코어개수
+    public void SettingObj(int ObjType, int core_Num)
     {
         ObjectType = ObjType;
         if (ObjType == 0){
@@ -144,8 +128,7 @@ public class Enemy : MonoBehaviour
             PlayParticle();
             this.gameObject.SetActive(false);
             GetComponentInParent<EnemyManager>().DropCores(transform.position, coreNum, this.GetComponent<EnemyCore>().GetEnemyCorePropertyArr());
-            GameManager.instance.ResetPropertyCount();
-            //instance.GetComponent<GameManager>().ResetPropertyCount();            
+            GameManager.instance.ResetPropertyCount();                        
             hp=hpT;                        
         }
             

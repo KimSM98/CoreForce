@@ -21,7 +21,6 @@ public class MeteorScript : MonoBehaviour
         yPos = this.transform.position.y;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isMeteorAppear == true){
@@ -56,7 +55,6 @@ public class MeteorScript : MonoBehaviour
         isMeteorAppear = true;
     }
     IEnumerator WaitAppear(){
-        //isMeteorAppear = false;
 
         yield return new WaitForSeconds(AppearTerm);
 
@@ -67,29 +65,15 @@ public class MeteorScript : MonoBehaviour
     }
     IEnumerator Flicker(){
         
-        /*for(float i= 1; i>0.5; i-=0.1f){            
-            Line.GetComponent<SpriteRenderer>().color = new Color(1,1,1,i); 
-        }*/
         Line.SetActive(true);
-
         yield return new WaitForSeconds(1f);
 
-        /*for(float i = 0.5f; i <= 1; i+=0.1f){            
-            Line.GetComponent<SpriteRenderer>().color = new Color(1,1,1,i); 
-        }*/
         Line.SetActive(false);
-        Coution.SetActive(false);
-        
-        //xPos = EnemyManager.instance.GetMeteorPos();
-        //EnemyManager.instance.GetComponent<EnemyManager>().GetMeteorPos();
-        
-        //this.transform.position = new Vector2(EnemyManager.instance.GetMeteorPos(), yPos);
+        Coution.SetActive(false);      
+        yield return new WaitForSeconds(1f);     
 
-        yield return new WaitForSeconds(1f);
-        
         isMove = true;
         SoundManager.instance.MeteorSound();
-        //isMeteorAppear = false;
     }
 
 }

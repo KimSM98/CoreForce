@@ -16,6 +16,7 @@ public class MainUIScript : MonoBehaviour
     public GameObject QuitGameUI;
     bool isClicked = false;
     bool isPlayerMove = false;
+
     void Start()
     {
         //PlayerPrefs.SetInt("BestScore", 0);//초기화할때 사용
@@ -40,7 +41,6 @@ public class MainUIScript : MonoBehaviour
             }
                 
         }
-
         if(Input.GetKeyDown(KeyCode.Escape))
         {   
             AllUI.SetActive(false);
@@ -52,13 +52,10 @@ public class MainUIScript : MonoBehaviour
         AllUI.SetActive(false);
         PlayerIcon.SetActive(true);        
         BGStars.GetComponent<MoveMap>().SetSpeed(20);
-        isPlayerMove = true;
-        /*PlayerIcon.transform.Translate(new Vector3(0,0.1f,0));
-        if(PlayerIcon.transform.position.y > 4.6f)
-            SceneManager.LoadScene("GamePlayScene");*/
+        isPlayerMove = true;        
     }
 
-    public void PressSoundOffButton(){//        
+    public void PressSoundOffButton(){      
         SoundButton[1].SetActive(false);
         SoundButton[0].SetActive(true);    
         PlayerPrefs.SetInt("IsSoundOn", 0);
